@@ -7,7 +7,7 @@ Apresenta minha formação, experiência com dados e administração, conhecimen
 ## Status e links úteis
 
 - **Prévia local:** `http://localhost:4173`, depois de executar `npm start`.
-- **Site na nuvem:** https://enzo-fernandes-portfolio.jaunty-llama-6894.chatgpt.site — [informações da entrega](ENTREGA.md).
+- **Endereço previsto no GitHub Pages (ativação pendente):** https://enzofernandesnz.github.io/portfolio-nz/ — [informações da entrega](ENTREGA.md).
 - **Wireframes editáveis:** [Figma — LAB01](https://www.figma.com/design/NjzgMxO5X7h9xFp9uEPsMC).
 - **Perfil do autor:** [GitHub](https://github.com/enzofernandesnz) · [LinkedIn](https://www.linkedin.com/in/enzo-fernandes-dev).
 - **Repositório deste portfólio:** [enzofernandesnz/portfolio-nz](https://github.com/enzofernandesnz/portfolio-nz).
@@ -56,7 +56,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 | Bibliotecas em produção | Nenhuma | Sem dependências npm no navegador |
 | APIs nativas | LocalStorage, IntersectionObserver, Dialog, Constraint Validation | Preferências, navegação, modal e validação |
 | Protótipos | Figma | Wireframes de média fidelidade, editáveis |
-| Hospedagem | Sites; configuração adicional para Vercel e GitHub Pages | Distribuição dos arquivos estáticos |
+| Hospedagem | GitHub Pages; configuração alternativa para Vercel | Distribuição dos arquivos estáticos |
 | Verificação | Playwright e Microsoft Edge | Testes de interface e capturas durante o desenvolvimento |
 
 **Não há banco de dados nem servidor de aplicação próprio em produção.** Os projetos ficam em uma lista no código; o serviço externo implementa o processamento do formulário. Essa escolha reduz a complexidade de manutenção de um portfólio pessoal e atende ao envio de contato previsto na atividade. O Node.js local não envia e-mails.
@@ -122,12 +122,12 @@ Ao incluir um projeto, preencha nome, data de referência, categoria, tecnologia
 
 ### Hospedagem desta entrega
 
-O endereço e o status verificados estão em [ENTREGA.md](ENTREGA.md). A publicação usa a pasta `dist`, configurada em `.openai/hosting.json`. O site foi autorizado para acesso público pelo autor.
+A publicação usa a pasta `dist` e o workflow `.github/workflows/pages.yml`. O endereço previsto é https://enzofernandesnz.github.io/portfolio-nz/. A ativação do GitHub Pages e a conclusão do primeiro deploy ainda estão pendentes; acompanhe a situação em [ENTREGA.md](ENTREGA.md).
 
 ### GitHub Pages
 
-1. Crie um repositório na conta `enzofernandesnz`, por exemplo `portfolio-nz`.
-2. Envie **todo o conteúdo desta pasta**, incluindo README, `docs`, `dist` e `.github`.
+1. Acesse o repositório `enzofernandesnz/portfolio-nz`.
+2. O código, o README, `docs`, `dist` e `.github` já estão na branch `main`.
 3. Em **Settings → Pages → Build and deployment**, selecione **GitHub Actions**.
 4. Execute o workflow `Publicar portfolio no GitHub Pages`, ou faça um envio para a branch `main`.
 5. Copie o endereço fornecido pelo deploy para a seção de links úteis deste README.
@@ -148,7 +148,6 @@ A configuração está em `vercel.json`. Nenhuma variável de ambiente é necess
 ```text
 portfolio-enzo/
 ├── .github/workflows/pages.yml   # Publicação no GitHub Pages
-├── .openai/hosting.json          # Configuração de Sites
 ├── dist/
 │   ├── index.html                # Página com as quatro seções
 │   ├── style.css                 # Estilos e regras responsivas
