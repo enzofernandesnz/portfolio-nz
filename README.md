@@ -7,7 +7,7 @@ Apresenta minha formação, experiência com dados e administração, conhecimen
 ## Status e links úteis
 
 - **Prévia local:** `http://localhost:4173`, depois de executar `npm start`.
-- **Endereço previsto no GitHub Pages (ativação pendente):** https://enzofernandesnz.github.io/portfolio-nz/ — [informações da entrega](ENTREGA.md).
+- **Site publicado no GitHub Pages:** https://enzofernandesnz.github.io/portfolio-nz/ — [informações da entrega](ENTREGA.md).
 - **Wireframes editáveis:** [Figma — LAB01](https://www.figma.com/design/NjzgMxO5X7h9xFp9uEPsMC).
 - **Perfil do autor:** [GitHub](https://github.com/enzofernandesnz) · [LinkedIn](https://www.linkedin.com/in/enzo-fernandes-dev).
 - **Repositório deste portfólio:** [enzofernandesnz/portfolio-nz](https://github.com/enzofernandesnz/portfolio-nz).
@@ -122,7 +122,7 @@ Ao incluir um projeto, preencha nome, data de referência, categoria, tecnologia
 
 ### Hospedagem desta entrega
 
-A publicação usa a pasta `dist` e o workflow `.github/workflows/pages.yml`. O endereço previsto é https://enzofernandesnz.github.io/portfolio-nz/. A ativação do GitHub Pages e a conclusão do primeiro deploy ainda estão pendentes; acompanhe a situação em [ENTREGA.md](ENTREGA.md).
+A publicação usa a pasta `dist` e o workflow `.github/workflows/pages.yml`. O endereço publicado é https://enzofernandesnz.github.io/portfolio-nz/. Publicação concluída com sucesso em 12/10/2026. Consulte [ENTREGA.md](ENTREGA.md).
 
 ### GitHub Pages
 

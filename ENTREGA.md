@@ -5,7 +5,7 @@
 ## Links
 
 - GitHub: https://github.com/enzofernandesnz/portfolio-nz
-- Endereço previsto no GitHub Pages (ativação pendente): https://enzofernandesnz.github.io/portfolio-nz/
+- Site publicado no GitHub Pages: https://enzofernandesnz.github.io/portfolio-nz/
 - Protótipos: https://www.figma.com/design/NjzgMxO5X7h9xFp9uEPsMC
 - Documentação: [README.md](README.md)
 - Planejamento: [docs/PLANEJAMENTO.md](docs/PLANEJAMENTO.md)
@@ -29,7 +29,7 @@ As imagens de Delivery e Display Grid mostram os arquivos HTML originais executa
 
 ## Publicação no GitHub Pages
 
-O código e o workflow estão no GitHub. A primeira tentativa de publicação não foi concluída porque o Pages ainda precisa ser habilitado para GitHub Actions em Settings → Pages → Build and deployment → Source. Após habilitar, execute novamente o workflow e confira o endereço publicado antes de enviar no Canvas.
+Publicação concluída com sucesso em 12/10/2026 pelo workflow GitHub Actions. O site público está em https://enzofernandesnz.github.io/portfolio-nz/. A pasta publicada é `dist`; novos envios para a branch `main` atualizam o site automaticamente.
 
 ## Ações que dependem da conta do autor
 
@@ -39,4 +39,4 @@ Essa ativação deve ser concluída antes da avaliação. A presença do formul�
 
 ## Como publicar em outra hospedagem
 
-Há configuração pronta para Vercel (`vercel.json`) e GitHub Pages (`.github/workflows/pages.yml`). As instruções estão no README. O destino previsto desta entrega é o GitHub Pages da conta `enzofernandesnz`.
+Há configuração pronta para Vercel (`vercel.json`) e GitHub Pages (`.github/workflows/pages.yml`). As instruções estão no README. A hospedagem desta entrega é o GitHub Pages da conta `enzofernandesnz`.
