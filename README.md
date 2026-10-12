@@ -155,10 +155,10 @@ portfolio-enzo/
 │   ├── app.js                    # Conteúdo dinâmico e interações
 │   └── assets/                   # Imagens reais e ícone nz
 ├── docs/
-│   ├── wireframes.png            # Visão geral exportada do Figma
-│   ├── inicio.png                # Captura do site
-│   ├── desktop.png               # Página completa em desktop
-│   ├── mobile.png                # Página completa em celular
+│   ├── wireframes.webp            # Visão geral exportada do Figma
+│   ├── inicio.webp                # Captura do site
+│   ├── desktop.webp               # Página completa em desktop
+│   ├── mobile.webp                # Página completa em celular
 │   ├── PLANEJAMENTO.md           # Requisitos, sprints e decisões
 │   └── APRESENTACAO.md            # Roteiro de demonstração
 ├── ENTREGA.md                    # Situação e ações finais
@@ -174,15 +174,15 @@ portfolio-enzo/
 
 [Abrir os protótipos editáveis no Figma](https://www.figma.com/design/NjzgMxO5X7h9xFp9uEPsMC).
 
-![Wireframes: Sobre Mim, Projetos, Experiências e Contato](docs/wireframes.png)
+![Wireframes: Sobre Mim, Projetos, Experiências e Contato](docs/wireframes.webp)
 
 Os wireframes organizam hierarquia, navegação, conteúdo e versão móvel. O tratamento monocromático e os espaços reservados para imagens são intencionais nesta etapa. A implementação final aplica as cores escolhidas e amplia a timeline com os demais projetos do autor.
 
 ### Site implementado
 
-![Página inicial](docs/inicio.png)
+![Página inicial](docs/inicio.webp)
 
-Capturas completas: [Desktop](docs/desktop.png) · [Celular](docs/mobile.png).
+Capturas completas: [Desktop](docs/desktop.webp) · [Celular](docs/mobile.webp).
 
 ## Projetos e fontes de conteúdo
 
