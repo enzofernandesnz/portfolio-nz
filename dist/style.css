@@ -13,3 +13,11 @@
 .brand-name{font-size:30px;font-weight:700;letter-spacing:-1.5px}.brand-name span{font-size:8px;letter-spacing:1px}.hero h1 .serif{margin-left:.1em}
 
 .project-award{display:grid;gap:4px;margin:12px 0 16px;padding:12px 14px;border-left:3px solid #698b36;background:#dde7cb;border-radius:0 6px 6px 0;color:#23351d}.project-award strong{font-size:13px;line-height:1.5}.project-award span{font-size:11px;line-height:1.6}
+
+/* Section-scoped SplashCursor. Content remains above the decorative canvas. */
+.hero,.about{position:relative;isolation:isolate;overflow:hidden}
+:is(.hero,.about)>.cursor-smoke{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none;opacity:.7}
+:is(.hero,.about)>.cursor-smoke[hidden]{display:none}
+:is(.hero,.about)>:not(.cursor-smoke){position:relative;z-index:1}
+.hero h1,.hero .intro,.hero .hero-description,.about .about-content,.about h2,.about .skills{text-shadow:0 1px 5px #111713}
+@media(prefers-reduced-motion:reduce){:is(.hero,.about)>.cursor-smoke{display:none}}

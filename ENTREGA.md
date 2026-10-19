@@ -29,6 +29,10 @@ A imagem do Estagi.ON vem da documentação original da equipe e mostra a listag
 
 As imagens de Delivery e Display Grid mostram os arquivos HTML originais executados localmente. Blazor e MEchanic foram compilados/executados em ambientes locais isolados. O projeto TSE usa seu CSV original; as fotos ausentes de candidatos são uma limitação do repositório original. O projeto Oficina usa saída real de console, sem interface gráfica inventada.
 
+## Atualização visual — SplashCursor
+
+Fumaça interativa verde-lima no início (Curiosidade em código) e em Sobre Mim, adaptada do exemplo ReactBits do professor. Os canvases ficam atrás do conteúdo, limitados a cada seção, sem bloquear links ou a rolagem por toque. A animação respeita movimento reduzido e pausa fora da tela; o conteúdo continua disponível quando WebGL não está disponível. Licença e atribuição acompanham o código.
+
 ## Publicação no GitHub Pages
 
 Publicação concluída com sucesso em 12/10/2026 pelo workflow GitHub Actions. O site público está em https://enzofernandesnz.github.io/portfolio-nz/. A pasta publicada é `dist`; novos envios para a branch `main` atualizam o site automaticamente.

@@ -35,6 +35,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 ## Funcionalidades
 
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
+- Fumaça interativa SplashCursor no bloco inicial e em Sobre Mim: responde ao mouse e ao toque, fica atrás do conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
 - Linha do tempo gerada a partir de dados JavaScript, em ordem cronológica crescente.
 - Filtros por Front-end, Full stack e Java.
@@ -53,7 +54,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 | Interatividade | JavaScript ES moderno | Idiomas, filtros, timeline, menu e modal |
 | Back-end de contato | FormSubmit, serviço externo | Recebimento do POST, captcha e entrega por e-mail |
 | Servidor de desenvolvimento | Node.js 20+ | Servir a pasta `dist` localmente |
-| Bibliotecas em produção | Nenhuma | Sem dependências npm no navegador |
+| Efeito visual | SplashCursor / React Bits, adaptado para JavaScript nativo | Simulação de fluido em WebGL; código incluído localmente, sem dependências npm |
 | APIs nativas | LocalStorage, IntersectionObserver, Dialog, Constraint Validation | Preferências, navegação, modal e validação |
 | Protótipos | Figma | Wireframes de média fidelidade, editáveis |
 | Hospedagem | GitHub Pages; configuração alternativa para Vercel | Distribuição dos arquivos estáticos |
@@ -73,6 +74,16 @@ Visitante
 ```
 
 O conteúdo permanece disponível sem uma consulta ao GitHub em tempo real. Assim, limites da API ou indisponibilidade do GitHub não impedem a leitura do portfólio. Os links para os repositórios continuam disponíveis.
+
+### Fumaça interativa (SplashCursor)
+
+O efeito parte do [exemplo ReactBits do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits), com o componente SplashCursor de David Haz / React Bits adaptado ao JavaScript nativo do portfólio. O motor de fluido utiliza WebGL; não foi necessário migrar o site para React.
+
+O canvas fica limitado aos blocos `#inicio` e `#sobre`, atrás do conteúdo, com `pointer-events: none`. As coordenadas do mouse e do toque são relativas a cada bloco. A cor verde-lima acompanha a identidade visual. A resolução da simulação e a taxa de atualização são limitadas; a renderização pausa quando o bloco sai da tela, a aba fica oculta ou `prefers-reduced-motion` está ativo. Sem suporte WebGL, ou após perda do contexto gráfico, o conteúdo permanece disponível sem animação.
+
+O código e os créditos estão em `dist/splash-cursor.js`, e a licença MIT + Commons Clause acompanha a distribuição em `dist/licenses/LICENSE-react-bits.md`. A adaptação acrescenta escopo por seção, controle de visibilidade, acessibilidade e liberação de recursos gráficos.
+
+Capturas do efeito: [Início](docs/splash-inicio.webp) · [Sobre Mim](docs/splash-sobre.webp).
 
 ### Formulário e privacidade
 
@@ -152,6 +163,8 @@ portfolio-enzo/
 │   ├── index.html                # Página com as quatro seções
 │   ├── style.css                 # Estilos e regras responsivas
 │   ├── app.js                    # Conteúdo dinâmico e interações
+│   ├── splash-cursor.js          # Fumaça interativa limitada a início e Sobre Mim
+│   ├── licenses/                # Licença do componente React Bits
 │   └── assets/                   # Imagens reais e ícone nz
 ├── docs/
 │   ├── wireframes.webp            # Visão geral exportada do Figma
@@ -212,6 +225,7 @@ Verificações realizadas durante o desenvolvimento:
 - Campos obrigatórios, endereço de e-mail inválido e comprimentos mínimos.
 - Layout em larguras de 320, 390, 768 e 1440 pixels.
 - Verificação de erros JavaScript no navegador.
+- SplashCursor nos dois blocos, mouse e toque, links acessíveis, pausa fora da tela, movimento reduzido, redimensionamento e fallback sem WebGL.
 
 Os resultados finais e limitações estão em [ENTREGA.md](ENTREGA.md). Teste do recebimento real de e-mail depende da ativação do destinatário; não foi simulado.
 
@@ -224,6 +238,7 @@ E-mail: enzofalcantara@gmail.com
 ## Referências e agradecimentos
 
 - Estrutura deste README adaptada ao [template do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/TEMPLATES/template_README.md).
+- [React Bits — SplashCursor](https://reactbits.dev/animations/splash-cursor), de David Haz. Licença incluída em `dist/licenses/LICENSE-react-bits.md`.
 - [Documentação do FormSubmit](https://formsubmit.co/documentation).
 - [Documentação do GitHub Pages](https://docs.github.com/en/pages).
 - [Documentação da Vercel](https://vercel.com/docs).

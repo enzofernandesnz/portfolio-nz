@@ -23,7 +23,7 @@ Mostre a organização das pastas no README. Diferencie o servidor Node.js usado
 1. Troque de português para inglês e retorne.
 2. Abra Projetos e explique que a ordem usa a data de criação dos repositórios.
 3. Demonstre os filtros e abra um repositório. Destaque o Estagi.ON, desenvolvido em grupo no 1º semestre de 2026, e o certificado de melhor projeto de Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web.
-4. Amplie uma imagem real de um projeto.
+4. Amplie uma imagem real de um projeto. Mova o cursor pelo bloco inicial e por Sobre Mim para demonstrar o SplashCursor. Explique que o componente React Bits do exemplo do professor foi adaptado para JavaScript nativo e WebGL, respeitando movimento reduzido.
 5. Mostre sua experiência como analista de dados e administração, com uso de IA em processos da empresa.
 6. Reduza a largura da janela e use o menu móvel.
 7. Demonstre um campo obrigatório ou e-mail inválido sem realizar envio desnecessário.
