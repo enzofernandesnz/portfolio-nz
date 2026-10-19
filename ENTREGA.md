@@ -16,14 +16,16 @@
 | Etapa | Material |
 |---|---|
 | Sprint 01 — 4 pontos | Requisitos, wireframes editáveis, estrutura do site, navegação e README |
-| Sprint 02 — 4 pontos | PT/EN, seis projetos, timeline, filtros, experiências, contatos e formulário com validações |
+| Sprint 02 — 4 pontos | PT/EN, sete projetos, timeline, filtros, experiências, contatos e formulário com validações |
 | Sprint 03 — 7 pontos | Versão para nuvem, imagens reais, layout responsivo, README final e roteiro de apresentação |
 
 O código está na pasta `dist`. Para executar localmente, abra um terminal na raiz `portfolio-enzo` e use `npm start`.
 
 ## Verificação técnica
 
-Conferidos no navegador: seis projetos, filtros, alternância PT/EN, modal, validação do formulário, menu móvel e ausência de rolagem horizontal em 320, 390, 768 e 1440 pixels. Nenhum erro JavaScript foi encontrado no fluxo testado.
+Conferidos no navegador: sete projetos, filtros, alternância PT/EN, modal, validação do formulário, menu móvel e ausência de rolagem horizontal em 320, 390, 768 e 1440 pixels. Nenhum erro JavaScript foi encontrado no fluxo testado.
+
+A imagem do Estagi.ON vem da documentação original da equipe e mostra a listagem de vagas. O cartão destaca o projeto em grupo do 1º semestre de 2026 e o certificado de melhor projeto de Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web, informado por Enzo.
 
 As imagens de Delivery e Display Grid mostram os arquivos HTML originais executados localmente. Blazor e MEchanic foram compilados/executados em ambientes locais isolados. O projeto TSE usa seu CSV original; as fotos ausentes de candidatos são uma limitação do repositório original. O projeto Oficina usa saída real de console, sem interface gráfica inventada.
 

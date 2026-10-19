@@ -22,7 +22,7 @@ Mostre a organização das pastas no README. Diferencie o servidor Node.js usado
 
 1. Troque de português para inglês e retorne.
 2. Abra Projetos e explique que a ordem usa a data de criação dos repositórios.
-3. Demonstre os filtros e abra um repositório.
+3. Demonstre os filtros e abra um repositório. Destaque o Estagi.ON, desenvolvido em grupo no 1º semestre de 2026, e o certificado de melhor projeto de Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web.
 4. Amplie uma imagem real de um projeto.
 5. Mostre sua experiência como analista de dados e administração, com uso de IA em processos da empresa.
 6. Reduza a largura da janela e use o menu móvel.
@@ -46,4 +46,4 @@ Comente o que você compreendeu sobre separar conteúdo, apresentação e compor
 
 **Como o site funciona no celular?** CSS Grid/Flexbox e media queries reorganizam o conteúdo em uma coluna e habilitam o menu compacto.
 
-**As imagens são simulações?** As imagens incluídas como capturas foram obtidas dos projetos executados localmente. Blocos tipográficos de projetos sem captura não são apresentados como screenshots.
+**As imagens são simulações?** A captura do Estagi.ON vem da documentação original da equipe. As demais capturas foram obtidas dos projetos executados localmente. Blocos tipográficos de projetos sem captura não são apresentados como screenshots.

@@ -11,3 +11,5 @@
 .brand-name{font-size:18px;letter-spacing:-.6px;font-weight:700;line-height:1.2}.brand-name span{display:block;font:8px Consolas,monospace;letter-spacing:1.2px;color:var(--muted);margin-top:6px}.footer-name{font-size:15px;font-weight:600}.hero-grid{grid-template-columns:1fr;padding-block:56px 68px}.hero h1{font-size:clamp(48px,6vw,82px);max-width:1000px}.hero h1 br:nth-of-type(1){display:none}.hero h1>.serif{font-size:1em}.hero-description{max-width:610px}.hero-copy .intro{margin-bottom:24px}@media(max-width:720px){.brand-name{font-size:16px}.brand-name span{font-size:7px;letter-spacing:.7px}.hero-grid{padding-block:38px}.hero h1{font-size:clamp(42px,9vw,60px)}.hero h1 br:nth-of-type(1){display:block}.footer-name{font-size:12px}}
 
 .brand-name{font-size:30px;font-weight:700;letter-spacing:-1.5px}.brand-name span{font-size:8px;letter-spacing:1px}.hero h1 .serif{margin-left:.1em}
+
+.project-award{display:grid;gap:4px;margin:12px 0 16px;padding:12px 14px;border-left:3px solid #698b36;background:#dde7cb;border-radius:0 6px 6px 0;color:#23351d}.project-award strong{font-size:13px;line-height:1.5}.project-award span{font-size:11px;line-height:1.6}

@@ -190,11 +190,14 @@ Capturas completas: [Desktop](docs/desktop.webp) · [Celular](docs/mobile.webp).
 | 13/08/2024 | Delivery | HTML, CSS | [Repositório](https://github.com/enzofernandesnz/delivery) |
 | 28/10/2024 | Display Grid | HTML, CSS Grid | [Repositório](https://github.com/enzofernandesnz/Display-grid) |
 | 08/08/2025 | Gerenciamento de Pedidos | C#, .NET 8, Blazor Server, Bootstrap | [Repositório](https://github.com/enzofernandesnz/atv6_blazor) |
+| 09/04/2026 | Estagi.ON | HTML, CSS, JavaScript, Node.js, JSON Server | [Repositório](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0427200-estagi-on) |
 | 06/08/2026 | MEchanic | PHP, Laravel, Blade, SQLite | [Repositório](https://github.com/enzofernandesnz/MEchanic-dev) |
 | 28/09/2026 | Perfil dos Candidatos — MG | Java, Spring Boot, Thymeleaf, OpenCSV | [Repositório](https://github.com/enzofernandesnz/Projeto-Candidatos-TSE-2) |
 | 28/09/2026 | Gestão de Oficina | Java, POO, ArrayList, Scanner | [Repositório](https://github.com/enzofernandesnz/prova1) |
 
-As descrições foram conferidas no código dos repositórios públicos. MEchanic é explicitamente apresentado como projeto em equipe. Display Grid é um exercício inspirado no layout Ogani. Repositórios de templates copiados por fork não foram apresentados como projetos próprios.
+As descrições foram conferidas no código dos repositórios públicos. Estagi.ON e MEchanic são explicitamente apresentados como projetos em equipe. Display Grid é um exercício inspirado no layout Ogani. Repositórios de templates copiados por fork não foram apresentados como projetos próprios.
+
+O Estagi.ON foi desenvolvido em grupo no 1º semestre de 2026. Enzo recebeu o certificado de melhor projeto de **Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web**, conforme seu relato. A imagem do cartão é a [captura de listagem de vagas da documentação da equipe](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0427200-estagi-on/blob/master/docs/images/funcionalidades/Listagem_de_vagas.png).
 
 Formação e contatos vêm do currículo fornecido por Enzo. A experiência como analista de dados e administração, o uso de IA e a preferência por manter a empresa anônima foram informados diretamente pelo autor. O período `2026 – atual` evita inventar um dia exato de admissão.
 
