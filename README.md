@@ -35,7 +35,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 ## Funcionalidades
 
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
-- Fumaça interativa SplashCursor em toda a tela, incluindo as margens laterais: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
+- Fumaça interativa SplashCursor apenas no início e em Sobre mim, incluindo as margens laterais dessas seções: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
 - Linha do tempo gerada a partir de dados JavaScript, em ordem cronológica crescente.
 - Filtros por Front-end, Full stack e Java.
@@ -79,9 +79,9 @@ O conteúdo permanece disponível sem uma consulta ao GitHub em tempo real. Assi
 
 O efeito parte do [exemplo ReactBits do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits), com o componente SplashCursor de David Haz / React Bits adaptado ao JavaScript nativo do portfólio. O motor de fluido utiliza WebGL; não foi necessário migrar o site para React.
 
-Um único canvas fixo cobre toda a área visível do navegador, incluindo as margens e todas as seções, com `pointer-events: none`. As coordenadas do mouse e do toque são relativas à janela, independentemente da largura dos blocos de conteúdo. A cor verde-lima acompanha a identidade visual. A resolução da simulação e a taxa de atualização são limitadas; a renderização pausa quando a aba fica oculta ou `prefers-reduced-motion` está ativo. Sem suporte WebGL, ou após perda do contexto gráfico, o conteúdo permanece disponível sem animação.
+Um único canvas fixo cobre a largura da janela, com `pointer-events: none`, mas é recortado verticalmente aos limites de Início e Sobre mim. Não aparece em Projetos, Experiências ou Contato, mesmo quando essas seções dividem a tela com Sobre mim. Movimentos fora da área permitida não geram fumaça; a simulação pausa quando ambas as seções saem da tela. As coordenadas do mouse e do toque são relativas à janela, independentemente da largura dos blocos de conteúdo. A cor verde-lima acompanha a identidade visual. A resolução da simulação e a taxa de atualização são limitadas; a renderização pausa quando a aba fica oculta ou `prefers-reduced-motion` está ativo. Sem suporte WebGL, ou após perda do contexto gráfico, o conteúdo permanece disponível sem animação.
 
-O código e os créditos estão em `dist/splash-cursor.js`, e a licença MIT + Commons Clause acompanha a distribuição em `dist/licenses/LICENSE-react-bits.md`. A adaptação acrescenta cobertura da janela, controle de visibilidade, acessibilidade e liberação de recursos gráficos.
+O código e os créditos estão em `dist/splash-cursor.js`, e a licença MIT + Commons Clause acompanha a distribuição em `dist/licenses/LICENSE-react-bits.md`. A adaptação acrescenta recorte por seção com largura total, controle de visibilidade, acessibilidade e liberação de recursos gráficos.
 
 Capturas da primeira versão do efeito (anterior à expansão para toda a tela): [Início](docs/splash-inicio.webp) · [Sobre Mim](docs/splash-sobre.webp).
 
@@ -163,7 +163,7 @@ portfolio-enzo/
 │   ├── index.html                # Página com as quatro seções
 │   ├── style.css                 # Estilos e regras responsivas
 │   ├── app.js                    # Conteúdo dinâmico e interações
-│   ├── splash-cursor.js          # Fumaça interativa em toda a janela
+│   ├── splash-cursor.js          # Fumaça no início e em Sobre mim
 │   ├── licenses/                # Licença do componente React Bits
 │   └── assets/                   # Imagens reais e ícone nz
 ├── docs/
@@ -225,7 +225,7 @@ Verificações realizadas durante o desenvolvimento:
 - Campos obrigatórios, endereço de e-mail inválido e comprimentos mínimos.
 - Layout em larguras de 320, 390, 768 e 1440 pixels.
 - Verificação de erros JavaScript no navegador.
-- SplashCursor em toda a janela, incluindo margens laterais, mouse e toque, links acessíveis, pausa em aba oculta, movimento reduzido, redimensionamento e fallback sem WebGL.
+- SplashCursor restrito a Início e Sobre mim, incluindo margens laterais dessas seções, mouse e toque, links acessíveis, pausa em aba oculta, movimento reduzido, redimensionamento e fallback sem WebGL.
 
 Os resultados finais e limitações estão em [ENTREGA.md](ENTREGA.md). Teste do recebimento real de e-mail depende da ativação do destinatário; não foi simulado.
 

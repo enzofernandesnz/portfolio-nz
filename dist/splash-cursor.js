@@ -4,7 +4,7 @@
  * Based on João Paulo Aramuni's ReactBits teaching example:
  * https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits
  * Adapted for this vanilla-JavaScript portfolio: viewport-relative pointer coordinates,
- * full-screen canvas, reduced-motion support, visibility pause and GPU cleanup.
+ * full-width section clipping, reduced-motion support, visibility pause and GPU cleanup.
  */
 (() => {
 'use strict';
@@ -1020,6 +1020,7 @@ function createSplash(canvas, eventTarget, {
 
 
     function pointerPosition(event) {
+      if (!insideSmokeArea(event.clientY)) return null;
       const bounds = canvas.getBoundingClientRect();
       if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return null;
       return { x: (event.clientX - bounds.left) / bounds.width * canvas.width,
@@ -1029,7 +1030,7 @@ function createSplash(canvas, eventTarget, {
     function handleMove(event) {
       if (!isActive || !event.isPrimary) return;
       const pos = pointerPosition(event);
-      if (!pos) { entered = false; return; }
+      if (!pos) { handleLeave(); return; }
       if (!entered) {
         updatePointerDownData(pointers[0], event.pointerId, pos.x, pos.y);
         entered = true;
@@ -1079,13 +1080,28 @@ function createSplash(canvas, eventTarget, {
 }
 
 const canvas = document.querySelector('body > .cursor-smoke');
-if (!canvas) return;
+const firstSection = document.querySelector('#inicio');
+const lastSection = document.querySelector('#sobre');
+const header = document.querySelector('.header');
+if (!canvas || !firstSection || !lastSection) return;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let effect = null;
 let unavailable = false;
+let smokeTop = 0;
+let smokeBottom = 0;
+function insideSmokeArea(y) {
+  return y >= smokeTop && y < smokeBottom;
+}
 function syncEffect() {
-  const shouldRun = !document.hidden && !reducedMotion.matches && !unavailable;
-  canvas.hidden = reducedMotion.matches || unavailable;
+  const height = window.innerHeight;
+  smokeTop = Math.min(height, Math.max(0, firstSection.getBoundingClientRect().top, header?.getBoundingClientRect().bottom || 0));
+  smokeBottom = Math.max(smokeTop, Math.min(height, lastSection.getBoundingClientRect().bottom));
+  const inSection = smokeBottom > smokeTop;
+  // Clip the full-width canvas at the section boundary, including when Projects
+  // and About are both visible. Hide and pause it once both sections leave view.
+  canvas.style.clipPath = `inset(${smokeTop}px 0 ${height - smokeBottom}px 0)`;
+  const shouldRun = inSection && !document.hidden && !reducedMotion.matches && !unavailable;
+  canvas.hidden = !inSection || reducedMotion.matches || unavailable;
   if (shouldRun && !effect) {
     try { effect = createSplash(canvas, window); } catch { effect = null; }
     if (!effect) { unavailable = true; canvas.hidden = true; return; }
@@ -1093,6 +1109,12 @@ function syncEffect() {
   if (shouldRun) effect?.resume(); else effect?.pause();
 }
 syncEffect();
+window.addEventListener('scroll', syncEffect, { passive: true });
+window.addEventListener('resize', syncEffect, { passive: true });
+const sectionObserver = new ResizeObserver(syncEffect);
+sectionObserver.observe(firstSection);
+sectionObserver.observe(lastSection);
+if (header) sectionObserver.observe(header);
 document.addEventListener('visibilitychange', syncEffect);
 reducedMotion.addEventListener('change', syncEffect);
 canvas.addEventListener('webglcontextlost', () => {
