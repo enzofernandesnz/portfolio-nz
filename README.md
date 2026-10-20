@@ -251,3 +251,7 @@ Na seção Sobre mim, abaixo do título, o SkillsGlobe apresenta 14 tecnologias 
 Permite arrastar com mouse ou toque, abrir a documentação das tecnologias, pausar a rotação e alternar para uma lista. Respeita a preferência de movimento reduzido, pausa fora da tela e durante a navegação por teclado. Sem JavaScript, mantém uma lista de links acessível. Controles disponíveis em português e inglês.
 
 Arquivos: `dist/skills-globe.js`, `dist/skills-globe.css` e `dist/assets/skills/`. Ícones locais do [Devicon](https://github.com/devicons/devicon), com as respectivas marcas preservadas. Licenças MIT incluídas em `dist/licenses/LICENSE-skills-globe.txt` e `dist/licenses/LICENSE-devicon.txt`.
+
+### Entrada dos elementos durante a rolagem
+
+Títulos, textos, projetos, experiências e contatos aparecem com opacidade gradual e subida de 28 pixels ao entrar na tela. O efeito dura 650 ms, com pequenos intervalos entre itens, e acontece uma única vez por elemento. Usa IntersectionObserver, sem bibliotecas adicionais. Os cartões gerados pelos filtros também recebem o efeito. Conteúdo já visível e elementos acessados pelo teclado aparecem imediatamente; movimento reduzido, impressão e ausência de JavaScript mantêm o conteúdo visível.

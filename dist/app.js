@@ -1,3 +1,48 @@
+// Progressive enhancement: content stays visible without JavaScript or motion.
+const revealOnScroll = (() => {
+  if (!('IntersectionObserver' in window)) return () => {};
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const registered = new WeakSet();
+  const pending = new Set();
+  const selector = '.section-label, #about-title, .skills-world, .about-content > *, .skills > div, .section-heading, .project-controls, .timeline-note, .project, .experience-grid > div:first-child, .experience, .contact-grid > div > h2, .contact-grid > div > p, .contact-links > a, #contact-form';
+  function show(element, instant = false) {
+    if (instant) element.classList.add('reveal-instant');
+    element.classList.add('is-revealed');
+    pending.delete(element);
+    observer.unobserve(element);
+  }
+  const observer = new IntersectionObserver(entries => {
+    let order = 0;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.style.setProperty('--reveal-delay', `${Math.min(order++, 2) * 70}ms`);
+      show(entry.target);
+    }
+  }, { rootMargin: '0px 0px -32px 0px', threshold: 0 });
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) [...pending].forEach(element => show(element, true));
+  });
+  document.addEventListener('focusin', event => {
+    const element = event.target.closest('.scroll-reveal');
+    if (element && pending.has(element)) show(element, true);
+  });
+  return (root = document) => {
+    // Project filters replace their cards; release detached observer targets.
+    for (const element of pending) {
+      if (!element.isConnected) { observer.unobserve(element); pending.delete(element); }
+    }
+    root.querySelectorAll(selector).forEach(element => {
+      if (registered.has(element)) return;
+      registered.add(element);
+      // Preserve content already on screen, passed by scrolling, or focused.
+      if (reducedMotion.matches || element.getBoundingClientRect().top < innerHeight - 32 || element.contains(document.activeElement)) return;
+      element.classList.add('scroll-reveal');
+      pending.add(element);
+      observer.observe(element);
+    });
+  };
+})();
+
 const projects = [
   {"id": "estagi-on", "date": "2026-04-09", "name": "Estagi.ON", "category": "fullstack", "team": true, "tags": ["HTML5", "CSS3", "JavaScript", "Node.js", "JSON Server"], "image": "assets/estagi-on.png", "repo": "https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0427200-estagi-on", "pt": "Projeto desenvolvido em grupo no 1º semestre de 2026 para conectar estudantes a empresas com oportunidades de estágio. Reúne busca e publicação de vagas, candidaturas, perfis, calendário e mensagens.", "en": "A team project developed in the first semester of 2026 to connect students with companies offering internships. Includes job search and posting, applications, profiles, a calendar and messaging.", "awardPT": "Certificado de melhor projeto", "awardEN": "Best Project Certificate", "awardDetailPT": "Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web · 1º semestre de 2026", "awardDetailEN": "Interdisciplinary Project: Web Application Development · First semester of 2026", "captionPT": "Tela de busca e listagem de vagas do Estagi.ON, publicada na documentação original da equipe. Projeto acadêmico em grupo.", "captionEN": "Estagi.ON job search and listing screen, published in the team’s original documentation. Academic team project."},
   {id:'delivery',date:'2024-08-13',name:'Delivery',category:'frontend',tags:['HTML5','CSS3'],image:'assets/delivery.webp',repo:'https://github.com/enzofernandesnz/delivery',demo:'https://enzofernandesnz.github.io/delivery/',pt:'Site de restaurante japonês com páginas de apresentação, cardápio e pedidos. Um exercício de estruturação de páginas e identidade visual com HTML e CSS.',en:'A Japanese restaurant website with presentation, menu and order pages. An exercise in page structure and visual identity using HTML and CSS.',captionPT:'Captura real da página inicial do projeto Delivery.',captionEN:'Actual screenshot of the Delivery home page.'},
@@ -26,6 +71,7 @@ function renderProjects(){
     article.querySelector('.details')?.addEventListener('click',()=>openProject(project));
     list.append(article);
   });
+  revealOnScroll(list);
 }
 const dialog=document.querySelector('#project-dialog');
 function openProject(project){
@@ -69,3 +115,4 @@ form.addEventListener('submit',event=>{
  document.querySelector('#form-status').textContent=text('Abrindo a confirmação de envio…','Opening the delivery confirmation…');
 });
 setLanguage(language);
+revealOnScroll();
