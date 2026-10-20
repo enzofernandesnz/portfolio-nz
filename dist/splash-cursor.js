@@ -3,12 +3,12 @@
  * MIT + Commons Clause: see licenses/LICENSE-react-bits.md.
  * Based on João Paulo Aramuni's ReactBits teaching example:
  * https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits
- * Adapted for this vanilla-JavaScript portfolio: section-local pointer coordinates,
- * bounded canvas, reduced-motion support, visibility pause and GPU cleanup.
+ * Adapted for this vanilla-JavaScript portfolio: viewport-relative pointer coordinates,
+ * full-screen canvas, reduced-motion support, visibility pause and GPU cleanup.
  */
 (() => {
 'use strict';
-function createSplash(canvas, section, {
+function createSplash(canvas, eventTarget, {
   SIM_RESOLUTION = 96,
   DYE_RESOLUTION = 512,
   CAPTURE_RESOLUTION = 512,
@@ -1044,10 +1044,10 @@ function createSplash(canvas, section, {
       clickSplat(pointers[0]);
     }
     function handleLeave() { entered = false; pointers[0].moved = false; }
-    section.addEventListener('pointermove', handleMove, { passive: true });
-    section.addEventListener('pointerdown', handleDown, { passive: true });
-    section.addEventListener('pointerleave', handleLeave);
-    section.addEventListener('pointercancel', handleLeave);
+    eventTarget.addEventListener('pointermove', handleMove, { passive: true });
+    eventTarget.addEventListener('pointerdown', handleDown, { passive: true });
+    eventTarget.addEventListener('pointerleave', handleLeave);
+    eventTarget.addEventListener('pointercancel', handleLeave);
     return {
       resume() {
         if (isActive) return;
@@ -1065,10 +1065,10 @@ function createSplash(canvas, section, {
       },
       destroy() {
         this.pause();
-        section.removeEventListener('pointermove', handleMove);
-        section.removeEventListener('pointerdown', handleDown);
-        section.removeEventListener('pointerleave', handleLeave);
-        section.removeEventListener('pointercancel', handleLeave);
+        eventTarget.removeEventListener('pointermove', handleMove);
+        eventTarget.removeEventListener('pointerdown', handleDown);
+        eventTarget.removeEventListener('pointerleave', handleLeave);
+        eventTarget.removeEventListener('pointercancel', handleLeave);
         releaseResources();
       }
     };
@@ -1078,27 +1078,21 @@ function createSplash(canvas, section, {
     }
 }
 
-for (const section of document.querySelectorAll('#inicio, #sobre')) {
-const canvas = section.querySelector('.cursor-smoke');
-if (!canvas) continue;
+const canvas = document.querySelector('body > .cursor-smoke');
+if (!canvas) return;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let effect = null;
-let visible = false;
 let unavailable = false;
 function syncEffect() {
-  const shouldRun = visible && !document.hidden && !reducedMotion.matches && !unavailable;
+  const shouldRun = !document.hidden && !reducedMotion.matches && !unavailable;
   canvas.hidden = reducedMotion.matches || unavailable;
   if (shouldRun && !effect) {
-    try { effect = createSplash(canvas, section); } catch { effect = null; }
+    try { effect = createSplash(canvas, window); } catch { effect = null; }
     if (!effect) { unavailable = true; canvas.hidden = true; return; }
   }
   if (shouldRun) effect?.resume(); else effect?.pause();
 }
-const observer = new IntersectionObserver(([entry]) => {
-  visible = entry.isIntersecting;
-  syncEffect();
-});
-observer.observe(section);
+syncEffect();
 document.addEventListener('visibilitychange', syncEffect);
 reducedMotion.addEventListener('change', syncEffect);
 canvas.addEventListener('webglcontextlost', () => {
@@ -1109,5 +1103,4 @@ canvas.addEventListener('webglcontextlost', () => {
 // Release GPU resources on navigation; restore after a back/forward cache return.
 window.addEventListener('pagehide', () => { effect?.destroy(); effect = null; });
 window.addEventListener('pageshow', syncEffect);
-}
 })();

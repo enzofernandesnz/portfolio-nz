@@ -31,7 +31,7 @@ As imagens de Delivery e Display Grid mostram os arquivos HTML originais executa
 
 ## Atualização visual — SplashCursor
 
-Fumaça interativa verde-lima no início (Curiosidade em código) e em Sobre Mim, adaptada do exemplo ReactBits do professor. Os canvases ficam atrás do conteúdo, limitados a cada seção, sem bloquear links ou a rolagem por toque. A animação respeita movimento reduzido e pausa fora da tela; o conteúdo continua disponível quando WebGL não está disponível. Licença e atribuição acompanham o código.
+Fumaça interativa verde-lima em toda a janela, incluindo as margens laterais e todas as seções, adaptada do exemplo ReactBits do professor. Um único canvas fixo acompanha o mouse ou toque sem bloquear links ou a rolagem. A animação respeita movimento reduzido e pausa quando a aba está oculta; o conteúdo continua disponível quando WebGL não está disponível. Licença e atribuição acompanham o código.
 
 ## Publicação no GitHub Pages
 
