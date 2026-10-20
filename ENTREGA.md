@@ -33,6 +33,12 @@ As imagens de Delivery e Display Grid mostram os arquivos HTML originais executa
 
 Fumaça interativa verde-lima em toda a janela, incluindo as margens laterais e todas as seções, adaptada do exemplo ReactBits do professor. Um único canvas fixo acompanha o mouse ou toque sem bloquear links ou a rolagem. A animação respeita movimento reduzido e pausa quando a aba está oculta; o conteúdo continua disponível quando WebGL não está disponível. Licença e atribuição acompanham o código.
 
+## Atualização visual — SkillsGlobe
+
+Globo interativo abaixo do título de Sobre mim, com 14 tecnologias presentes no currículo e nos projetos. Adaptação do exemplo SkillsGlobe de João Paulo Aramuni com Canvas 2D e JavaScript nativo. Ícones Devicon armazenados no site; licenças MIT incluídas.
+
+Verificado no navegador: rotação, pausa, arraste, lista alternativa, PT/EN, movimento reduzido, carregamento dos 14 ícones e ausência de transbordamento em 320, 390 e 1440 pixels.
+
 ## Publicação no GitHub Pages
 
 Publicação concluída com sucesso em 12/10/2026 pelo workflow GitHub Actions. O site público está em https://enzofernandesnz.github.io/portfolio-nz/. A pasta publicada é `dist`; novos envios para a branch `main` atualizam o site automaticamente.

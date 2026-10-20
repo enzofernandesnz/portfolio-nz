@@ -4,6 +4,12 @@
   "private": true,
   "type": "module",
   "description": "Portfólio profissional - LAB01 DIAW - Enzo Fernandes Alcantara",
-  "scripts": { "start": "node server.mjs", "dev": "node server.mjs", "check": "node --check dist/app.js && node --check dist/splash-cursor.js && node --check server.mjs" },
-  "engines": { "node": ">=20" }
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node --check dist/app.js && node --check dist/splash-cursor.js && node --check dist/skills-globe.js && node --check server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

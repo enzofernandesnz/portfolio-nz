@@ -1,0 +1,29 @@
+.about-heading { min-width: 0; }
+.skills-world { margin-top: 34px; max-width: 510px; }
+.globe-label { margin: 0; color: var(--muted, #a8b1a9); font: 10px/1.5 monospace; letter-spacing: .15em; }
+.skills-globe { position: relative; isolation: isolate; }
+.skills-globe canvas { display: none; }
+.skills-globe ul { list-style: none; margin: 0; padding: 24px 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 8px; }
+.skills-globe-item { display: flex; flex-direction: column; align-items: center; gap: 7px; text-decoration: none; color: #edf2e9; font-size: 11px; line-height: 1.2; white-space: nowrap; border-radius: 8px; }
+.globe-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #edf2e9; box-shadow: 0 0 0 1px #bef26435, 0 4px 15px #0003; }
+.globe-icon img { width: 32px; height: 32px; object-fit: contain; }
+.skills-globe-item:focus-visible { outline: 2px solid #bef264; outline-offset: 5px; opacity: 1 !important; z-index: 200 !important; }
+.skills-globe-item:hover { opacity: 1 !important; }
+.skills-globe-item:hover .globe-icon { box-shadow: 0 0 0 2px #bef264, 0 0 22px #bef26425; }
+.globe-name { text-shadow: 0 1px 5px #111713, 0 0 4px #111713; }
+.globe-hint { display: none; color: #a8b1a9; font-size: 11px; text-align: center; margin: 2px 0 13px; }
+.globe-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.globe-controls button { background: transparent; border: 1px solid #374338; border-radius: 20px; color: #ccd4c8; font: inherit; font-size: 11px; padding: 7px 12px; cursor: pointer; }
+.globe-controls button[hidden] { display: none; }
+.globe-controls button:hover, .globe-controls button[aria-pressed="true"] { color: #bef264; border-color: #71884f; }
+.is-enhanced:not(.is-list) .skills-globe { height: clamp(290px, 31vw, 390px); touch-action: pan-y; user-select: none; cursor: grab; }
+.is-enhanced:not(.is-list) .skills-globe:active { cursor: grabbing; }
+.is-enhanced:not(.is-list) .skills-globe canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.is-enhanced:not(.is-list) .skills-globe ul { display: block; padding: 0; }
+.is-enhanced:not(.is-list) .skills-globe-item { position: absolute; left: 0; top: 0; width: 78px; will-change: transform; }
+.is-enhanced:not(.is-list) .globe-hint { display: block; }
+.is-list .skills-globe-item { transform: none !important; opacity: 1 !important; }
+@media (max-width: 720px) {
+  .skills-world { margin-inline: auto; }
+  .is-enhanced:not(.is-list) .skills-globe { height: clamp(290px, 85vw, 390px); }
+}

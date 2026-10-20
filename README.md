@@ -243,3 +243,11 @@ E-mail: enzofalcantara@gmail.com
 - [Documentação do GitHub Pages](https://docs.github.com/en/pages).
 - [Documentação da Vercel](https://vercel.com/docs).
 - Os projetos, imagens e bibliotecas de terceiros mantêm suas atribuições e licenças originais.
+
+### Globo de linguagens e tecnologias
+
+Na seção Sobre mim, abaixo do título, o SkillsGlobe apresenta 14 tecnologias do currículo e dos projetos. O exemplo de [João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/SkillsGlobe) foi adaptado para JavaScript nativo, Canvas 2D e CSS, sem dependências adicionais. A geometria distribui os ícones em uma esfera e os projeta com perspectiva.
+
+Permite arrastar com mouse ou toque, abrir a documentação das tecnologias, pausar a rotação e alternar para uma lista. Respeita a preferência de movimento reduzido, pausa fora da tela e durante a navegação por teclado. Sem JavaScript, mantém uma lista de links acessível. Controles disponíveis em português e inglês.
+
+Arquivos: `dist/skills-globe.js`, `dist/skills-globe.css` e `dist/assets/skills/`. Ícones locais do [Devicon](https://github.com/devicons/devicon), com as respectivas marcas preservadas. Licenças MIT incluídas em `dist/licenses/LICENSE-skills-globe.txt` e `dist/licenses/LICENSE-devicon.txt`.
