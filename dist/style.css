@@ -26,24 +26,3 @@ body>.cursor-smoke[hidden]{display:none}
 .scroll-reveal.reveal-instant{transition:none}
 @media(prefers-reduced-motion:reduce){.scroll-reveal{opacity:1;transform:none;transition:none}}
 @media print{.scroll-reveal{opacity:1!important;transform:none!important;transition:none!important}}
-
-/* Sticky section layout: the introduction stays beside the scrolling content. */
-.projects-intro,.projects-stream{min-width:0}
-.projects-intro .filters{flex-wrap:wrap}
-@media(min-width:1001px){
-  .projects-layout{display:grid;grid-template-columns:minmax(250px,.75fr) minmax(0,1.65fr);gap:64px;align-items:start}
-  .projects-intro .section-heading{flex-direction:column;align-items:flex-start;gap:24px}
-  .projects-intro h2{font-size:clamp(32px,3vw,40px)}
-  .projects-intro .project-controls{flex-direction:column;align-items:flex-start;gap:20px;margin-top:32px}
-  .projects-intro .filters{flex-wrap:wrap;gap:8px}
-  .projects-intro .timeline-note{line-height:1.8;margin-top:22px}
-  .projects-stream .project-list{margin-top:0}
-  .projects-stream .project{grid-template-columns:56px minmax(0,1fr);gap:20px;padding-block:32px;align-items:start}
-  .projects-stream .project:first-child{padding-top:0;border-top:0}
-  .projects-stream .project-visual{grid-column:2;aspect-ratio:1.65}
-  .projects-stream .project-info{grid-column:2;padding:0}
-}
-@media(min-width:1001px) and (min-height:760px){
-  .projects-intro,.experience-intro{position:sticky;top:120px;align-self:start}
-}
-@media print{.projects-layout{display:block}.projects-intro,.experience-intro{position:static}}
