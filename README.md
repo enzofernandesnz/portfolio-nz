@@ -255,3 +255,7 @@ Arquivos: `dist/skills-globe.js`, `dist/skills-globe.css` e `dist/assets/skills/
 ### Entrada dos elementos durante a rolagem
 
 Títulos, textos, projetos, experiências e contatos aparecem com opacidade gradual e subida de 28 pixels ao entrar na tela. O efeito dura 650 ms, com pequenos intervalos entre itens, e acontece uma única vez por elemento. Usa IntersectionObserver, sem bibliotecas adicionais. Os cartões gerados pelos filtros também recebem o efeito. Conteúdo já visível e elementos acessados pelo teclado aparecem imediatamente; movimento reduzido, impressão e ausência de JavaScript mantêm o conteúdo visível.
+
+### Layout de seção fixa
+
+Inspirado no [efeito 7 da seleção Prismic](https://prismic.io/blog/css-scroll-effects#7-sticky-section-layout) e na [demonstração de Misala](https://codepen.io/p0waqqatsi/pen/wvbzQxj). Implementação própria com CSS `position: sticky`: em telas largas e altas, a introdução e os filtros de Projetos permanecem na coluna esquerda enquanto os projetos passam à direita. O título de Experiências acompanha sua lista da mesma maneira. Os painéis deixam a tela no fim de suas respectivas seções. Em telas menores ou baixas, o conteúdo retorna à rolagem normal, sem sobrepor o menu ou esconder controles. Mantém os efeitos de entrada e não altera a área da fumaça.
