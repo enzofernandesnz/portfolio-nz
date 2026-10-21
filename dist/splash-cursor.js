@@ -1087,6 +1087,10 @@ if (!canvas || !firstSection || !lastSection) return;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let effect = null;
 let unavailable = false;
+let interacting = false;
+let scrolling = false;
+let idleTimer = 0;
+let scrollTimer = 0;
 let smokeTop = 0;
 let smokeBottom = 0;
 function insideSmokeArea(y) {
@@ -1099,17 +1103,38 @@ function syncEffect() {
   const inSection = smokeBottom > smokeTop;
   // Clip the full-width canvas at the section boundary, including when Projects
   // and About are both visible. Hide and pause it once both sections leave view.
-  canvas.style.clipPath = `inset(${smokeTop}px 0 ${height - smokeBottom}px 0)`;
-  const shouldRun = inSection && !document.hidden && !reducedMotion.matches && !unavailable;
-  canvas.hidden = !inSection || reducedMotion.matches || unavailable;
+  const clip = `inset(${smokeTop}px 0 ${height - smokeBottom}px 0)`;
+  if (canvas.style.clipPath !== clip) canvas.style.clipPath = clip;
+  const shouldRun = inSection && interacting && !scrolling && !document.hidden && !reducedMotion.matches && !unavailable;
+  canvas.hidden = !shouldRun;
   if (shouldRun && !effect) {
     try { effect = createSplash(canvas, window); } catch { effect = null; }
     if (!effect) { unavailable = true; canvas.hidden = true; return; }
   }
   if (shouldRun) effect?.resume(); else effect?.pause();
 }
+function activateEffect(event) {
+  if (!event.isPrimary || scrolling || reducedMotion.matches || unavailable || document.hidden) return;
+  if (!insideSmokeArea(event.clientY) || event.clientX < 0 || event.clientX > window.innerWidth) return;
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => { interacting = false; syncEffect(); }, 1400);
+  if (!interacting) { interacting = true; syncEffect(); }
+}
+function handleScroll() {
+  // Let native scrolling run without the full-screen fluid simulation competing
+  // for frames. A new pointer interaction resumes the effect after scrolling.
+  scrolling = true;
+  interacting = false;
+  clearTimeout(idleTimer);
+  clearTimeout(scrollTimer);
+  syncEffect();
+  scrollTimer = setTimeout(() => { scrolling = false; syncEffect(); }, 160);
+}
 syncEffect();
-window.addEventListener('scroll', syncEffect, { passive: true });
+window.addEventListener('pointermove', activateEffect, { passive: true, capture: true });
+window.addEventListener('pointerdown', activateEffect, { passive: true, capture: true });
+window.addEventListener('wheel', handleScroll, { passive: true });
+window.addEventListener('scroll', handleScroll, { passive: true });
 window.addEventListener('resize', syncEffect, { passive: true });
 const sectionObserver = new ResizeObserver(syncEffect);
 sectionObserver.observe(firstSection);
@@ -1123,6 +1148,11 @@ canvas.addEventListener('webglcontextlost', () => {
   canvas.hidden = true;
 });
 // Release GPU resources on navigation; restore after a back/forward cache return.
-window.addEventListener('pagehide', () => { effect?.destroy(); effect = null; });
+window.addEventListener('pagehide', () => {
+  clearTimeout(idleTimer);
+  clearTimeout(scrollTimer);
+  interacting = scrolling = false;
+  effect?.destroy(); effect = null;
+});
 window.addEventListener('pageshow', syncEffect);
 })();
