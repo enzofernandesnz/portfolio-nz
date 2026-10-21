@@ -116,3 +116,26 @@ form.addEventListener('submit',event=>{
 });
 setLanguage(language);
 revealOnScroll();
+
+// Visual reading progress; observes native scrolling without controlling it.
+const readingProgress = document.createElement('div');
+readingProgress.className = 'reading-progress';
+readingProgress.setAttribute('aria-hidden', 'true');
+document.body.append(readingProgress);
+let progressFrame = 0;
+function updateReadingProgress() {
+  progressFrame = 0;
+  const root = document.documentElement;
+  const distance = root.scrollHeight - root.clientHeight;
+  const progress = distance > 0 ? Math.max(0, Math.min(1, window.scrollY / distance)) : 0;
+  readingProgress.style.transform = `scaleX(${progress})`;
+}
+function scheduleReadingProgress() {
+  if (!progressFrame) progressFrame = requestAnimationFrame(updateReadingProgress);
+}
+window.addEventListener('scroll', scheduleReadingProgress, { passive: true });
+window.addEventListener('resize', scheduleReadingProgress, { passive: true });
+window.addEventListener('pageshow', scheduleReadingProgress);
+window.addEventListener('load', scheduleReadingProgress);
+new ResizeObserver(scheduleReadingProgress).observe(document.body);
+updateReadingProgress();

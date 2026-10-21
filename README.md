@@ -255,3 +255,7 @@ Arquivos: `dist/skills-globe.js`, `dist/skills-globe.css` e `dist/assets/skills/
 ### Entrada dos elementos durante a rolagem
 
 Títulos, textos, projetos, experiências e contatos aparecem com opacidade gradual e subida de 28 pixels ao entrar na tela. O efeito dura 650 ms, com pequenos intervalos entre itens, e acontece uma única vez por elemento. Usa IntersectionObserver, sem bibliotecas adicionais. Os cartões gerados pelos filtros também recebem o efeito. Conteúdo já visível e elementos acessados pelo teclado aparecem imediatamente; movimento reduzido, impressão e ausência de JavaScript mantêm o conteúdo visível.
+
+### Indicador de progresso de rolagem
+
+Barra verde-lima de 3 pixels fixada no topo, inspirada na interação do [portfólio de Eduardo Toste](https://eduardo-toste.github.io/portfolio/), com implementação própria. O preenchimento acompanha a posição de rolagem do documento, de vazio no início a completo no fim. Recalcula após filtros, mudanças de idioma e redimensionamento. Usa eventos passivos, atualização por requestAnimationFrame e ResizeObserver; não controla a rolagem, não captura cliques e é ocultada na impressão e de tecnologias assistivas por ser um complemento visual à barra de rolagem nativa.

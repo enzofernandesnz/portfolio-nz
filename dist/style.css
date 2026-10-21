@@ -26,3 +26,7 @@ body>.cursor-smoke[hidden]{display:none}
 .scroll-reveal.reveal-instant{transition:none}
 @media(prefers-reduced-motion:reduce){.scroll-reveal{opacity:1;transform:none;transition:none}}
 @media print{.scroll-reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* Reading progress stays above the header without covering navigation. */
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:var(--lime);z-index:101;pointer-events:none;transform:scaleX(0);transform-origin:left center}
+@media print{.reading-progress{display:none}}
