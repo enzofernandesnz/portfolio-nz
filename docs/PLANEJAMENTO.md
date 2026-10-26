@@ -14,7 +14,7 @@ Criar um portfólio profissional responsivo que apresente formação, habilidade
 | ID | Requisito | Critério de aceitação |
 |---|---|---|
 | RF01 | Sobre Mim em PT e EN | Alternar idioma e conferir formação, atuação, interesses e objetivos |
-| RF02 | Projetos em timeline | Listar do mais antigo ao mais recente |
+| RF02 | Projetos em faixa horizontal | Cartões compactos, do mais recente ao mais antigo |
 | RF03 | Dados de cada projeto | Nome, descrição, tecnologias, GitHub e imagem/GIF real |
 | RF04 | Experiências | Instituição/empresa, atividade, período e descrição |
 | RF05 | Contato direto | Links funcionais para e-mail, WhatsApp, LinkedIn e GitHub |
@@ -26,7 +26,7 @@ Criar um portfólio profissional responsivo que apresente formação, habilidade
 
 ## Arquitetura de informação
 
-Página única com cabeçalho fixo, quatro âncoras e rodapé. O primeiro bloco apresenta Enzo e direciona aos projetos. A seção Sobre Mim reúne biografia e habilidades. A timeline oferece filtros sem alterar a ordem cronológica. Experiências agrupa atividade profissional e formação. Contato reúne links e formulário.
+Página única com cabeçalho fixo, quatro âncoras e rodapé. O primeiro bloco apresenta Enzo e direciona aos projetos. A seção Sobre Mim reúne biografia e habilidades. A faixa horizontal oferece filtros e mantém a ordem do mais recente ao mais antigo. Experiências agrupa atividade profissional e formação. Contato reúne links e formulário.
 
 ## Design e prototipação
 

@@ -37,7 +37,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
 - Fumaça interativa SplashCursor apenas no início e em Sobre mim, incluindo as margens laterais dessas seções: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
-- Linha do tempo gerada a partir de dados JavaScript, em ordem cronológica crescente.
+- Projetos em cartões compactos na horizontal, gerados a partir de dados JavaScript, do mais recente ao mais antigo pela criação dos repositórios.
 - Filtros por Front-end, Full stack e Java.
 - Imagens reais dos projetos disponíveis e ampliação em janela acessível.
 - Histórico profissional e formação acadêmica.
@@ -259,3 +259,7 @@ Títulos, textos, projetos, experiências e contatos aparecem com opacidade grad
 ### Indicador de progresso de rolagem
 
 Barra verde-lima de 3 pixels fixada no topo, inspirada na interação do [portfólio de Eduardo Toste](https://eduardo-toste.github.io/portfolio/), com implementação própria. O preenchimento acompanha a posição de rolagem do documento, de vazio no início a completo no fim. Recalcula após filtros, mudanças de idioma e redimensionamento. Usa eventos passivos, atualização por requestAnimationFrame e ResizeObserver; não controla a rolagem, não captura cliques e é ocultada na impressão e de tecnologias assistivas por ser um complemento visual à barra de rolagem nativa.
+
+### Navegação horizontal dos projetos
+
+Os sete projetos são exibidos em uma faixa horizontal de cartões compactos (até 320 px no computador e 300 px no celular), com imagens, descrições, tecnologias e links preservados. Setas Anterior/Próximo, rolagem horizontal nativa e gesto de deslizar permitem acessar todos os cartões. Os controles indicam o início e o fim da faixa e desaparecem quando todos os resultados cabem na tela. Filtros e troca de idioma reiniciam a faixa no primeiro resultado, mantendo a ordenação do mais recente ao mais antigo. A rolagem vertical da página continua nativa, sem converter movimentos da rodinha em deslocamento lateral.

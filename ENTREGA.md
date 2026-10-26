@@ -16,7 +16,7 @@
 | Etapa | Material |
 |---|---|
 | Sprint 01 — 4 pontos | Requisitos, wireframes editáveis, estrutura do site, navegação e README |
-| Sprint 02 — 4 pontos | PT/EN, sete projetos, timeline, filtros, experiências, contatos e formulário com validações |
+| Sprint 02 — 4 pontos | PT/EN, sete projetos em cartões horizontais compactos, ordem do mais recente ao mais antigo, filtros, experiências, contatos e formulário com validações |
 | Sprint 03 — 7 pontos | Versão para nuvem, imagens reais, layout responsivo, README final e roteiro de apresentação |
 
 O código está na pasta `dist`. Para executar localmente, abra um terminal na raiz `portfolio-enzo` e use `npm start`.

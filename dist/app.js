@@ -59,7 +59,7 @@ const text=(pt,en)=>language==='pt'?pt:en;
 const list=document.querySelector('#project-list');
 function renderProjects(){
   list.replaceChildren();
-  projects.filter(p=>filter==='all'||p.category===filter).sort((a,b)=>a.date.localeCompare(b.date)).forEach(project=>{
+  projects.filter(p=>filter==='all'||p.category===filter).sort((a,b)=>b.date.localeCompare(a.date)).forEach(project=>{
     const article=document.createElement('article');article.className='project';
     const date=new Date(project.date+'T12:00:00');
     const month=date.toLocaleDateString(language==='pt'?'pt-BR':'en-US',{month:'short'}).replace('.','').toUpperCase();
@@ -72,7 +72,28 @@ function renderProjects(){
     list.append(article);
   });
   revealOnScroll(list);
+  list.scrollTo({left:0,behavior:'instant'});
+  requestAnimationFrame(updateProjectNavigation);
 }
+const projectNavigation=document.querySelector('.project-navigation');
+const previousProject=document.querySelector('.project-previous');
+const nextProject=document.querySelector('.project-next');
+function updateProjectNavigation(){
+  const limit=list.scrollWidth-list.clientWidth;
+  projectNavigation.hidden=limit<=2;
+  previousProject.disabled=list.scrollLeft<=2;
+  nextProject.disabled=list.scrollLeft>=limit-2;
+}
+function moveProjects(direction){
+  const card=list.querySelector('.project');
+  if(!card)return;
+  const step=card.getBoundingClientRect().width+parseFloat(getComputedStyle(list).gap);
+  list.scrollBy({left:direction*step,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+}
+previousProject.addEventListener('click',()=>moveProjects(-1));
+nextProject.addEventListener('click',()=>moveProjects(1));
+list.addEventListener('scroll',updateProjectNavigation,{passive:true});
+new ResizeObserver(updateProjectNavigation).observe(list);
 const dialog=document.querySelector('#project-dialog');
 function openProject(project){
  const content=document.querySelector('#dialog-content');content.replaceChildren();
