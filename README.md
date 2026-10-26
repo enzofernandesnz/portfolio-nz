@@ -287,3 +287,8 @@ A publicação e uma atualização a cada seis horas geram `dist/data/github.jso
 ### Envio de contato na própria página
 
 O formulário envia por AJAX ao FormSubmit e apresenta o resultado sem navegar para outra página. Bloqueia envios duplicados enquanto aguarda, valida os campos, mantém a mensagem em caso de falha e só limpa o formulário após resposta positiva. O destinatário precisa ativar o formulário uma única vez pelo e-mail do serviço. Uma resposta de aceitação não comprova entrega na caixa de entrada.
+
+
+### Painel da trajetória
+
+A seção Experiências e Formação inclui um desenho decorativo de ramificações em pixels, com animação breve ao aparecer e ao passar o ponteiro ou clicar. O botão aceita teclado e respeita movimento reduzido.
