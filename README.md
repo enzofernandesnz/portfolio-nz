@@ -273,3 +273,7 @@ A faixa de atividade e o painel GitHub mostram dados públicos de `enzofernandes
 ### Análise de colaboradores
 
 O painel Contributor Stats, inspirado no [exemplo do professor](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ContributorStats), permite analisar repositórios públicos usando a API REST `/stats/contributors` do GitHub. O Estagi.ON aparece como opção inicial. Mostra autores (inclusive bots), commits, adições, remoções, saldo, semana aproximada do último commit, gráfico ordenável e exportação CSV. A API pode retornar 202 enquanto prepara os dados; o painel tenta novamente, permite cancelar e informa limites ou indisponibilidade. A análise cobre apenas a branch padrão e depende das limitações da API; não informa branches não mergeadas nem inclui as análises de produtividade e tipos de arquivo do projeto original. Quantidades de commits e linhas não medem qualidade ou toda a participação de uma pessoa. Não utiliza token no navegador.
+
+### Certificados
+
+A seção apresenta nove certificados de conclusão fornecidos por Enzo, com imagens dos documentos, data, instituição e navegação individual. As versões com o mesmo curso em anos diferentes são mantidas separadas; arquivos duplicados não são exibidos novamente. Os cartões de projetos e certificados compartilham um estilo mais simples e adaptável a telas pequenas.
