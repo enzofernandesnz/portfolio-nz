@@ -18,14 +18,3 @@
 @media(max-width:600px){.github-heading{align-items:flex-start;flex-direction:column;gap:18px}.github-profile-link{padding:9px 13px}.github-contributions-card{padding:18px}.github-total strong{font-size:35px}.github-stats{grid-template-columns:1fr 1fr}.github-stats div{padding:18px;border-bottom:1px solid #3d5040}.github-stats div:nth-child(2){border-right:0}.github-stats div:nth-last-child(-n+2){border-bottom:0}.github-repos-heading{align-items:flex-start;flex-direction:column;gap:10px}.github-repos{grid-template-columns:1fr 1fr}.github-repo{padding:14px;gap:17px}.github-repo-name{font-size:12px}.github-repo-meta{font-size:10px}.github-live{font-size:9px}.github-section{scroll-margin-top:72px}}
 @media(max-width:350px){.github-repos{grid-template-columns:1fr}.github-card-head{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.github-ticker-track.is-moving{animation:none}.github-ticker{overflow-x:auto}.github-ticker-group[aria-hidden=true]{display:none}.github-repo{transition:none}}
-
-/* Interactive decorative background, confined to GitHub. */
-.github-section{position:relative;isolation:isolate;overflow:hidden}
-.github-pixel-background{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-.github-section>.wrap{position:relative}
-.github-pixel-intro{height:34px;position:relative;margin-bottom:32px}
-.github-pixel-toggle{position:absolute;bottom:0;right:0;padding:8px 12px;border:1px solid #415340;border-radius:20px;background:#141e17;color:#c8d8c2;font:11px Consolas,monospace;cursor:pointer}
-.github-pixel-toggle:hover,.github-pixel-toggle:focus-visible{border-color:#bef264;color:#bef264}
-@media(max-width:1100px){.github-pixel-intro{height:34px}}
-@media(max-width:600px){.github-pixel-intro{height:34px;margin-bottom:24px}}
-@media print{.github-pixel-background,.github-pixel-intro{display:none}}
