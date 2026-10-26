@@ -37,7 +37,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
 - Fumaça interativa SplashCursor apenas no início e em Sobre mim, incluindo as margens laterais dessas seções: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
-- Projetos em cartões compactos na horizontal, gerados a partir de dados JavaScript, do mais recente ao mais antigo pela criação dos repositórios.
+- Projetos em cartões na horizontal, gerados a partir de dados JavaScript, do mais recente ao mais antigo pela criação dos repositórios.
 - Filtros por Front-end, Full stack e Java.
 - Imagens reais dos projetos disponíveis e ampliação em janela acessível.
 - Histórico profissional e formação acadêmica.
@@ -262,4 +262,4 @@ Barra verde-lima de 3 pixels fixada no topo, inspirada na interação do [portf�
 
 ### Navegação horizontal dos projetos
 
-Os sete projetos são exibidos em um carrossel horizontal centralizado, com um cartão por vez. Os cartões são compactos (até 320 px no computador e 300 px no celular), com imagens, descrições, tecnologias e links preservados. Setas Anterior/Próximo e gesto de deslizar avançam ou recuam um projeto por vez, com encaixe no cartão. A rolagem horizontal nativa também permite acessar todos os cartões. Os controles indicam o início e o fim da faixa e desaparecem quando todos os resultados cabem na tela. Filtros e troca de idioma reiniciam a faixa no primeiro resultado, mantendo a ordenação do mais recente ao mais antigo. A rolagem vertical da página continua nativa, sem converter movimentos da rodinha em deslocamento lateral.
+Os sete projetos são exibidos em um carrossel horizontal centralizado, com um cartão por vez. Os cartões têm até 420 px de largura, adaptando-se ao espaço disponível no celular, com imagens, descrições, tecnologias e links preservados. Setas Anterior/Próximo e gesto de deslizar avançam ou recuam um projeto por vez, com encaixe no cartão. A rolagem horizontal nativa também permite acessar todos os cartões. Os controles indicam o início e o fim da faixa e desaparecem quando todos os resultados cabem na tela. Filtros e troca de idioma reiniciam a faixa no primeiro resultado, mantendo a ordenação do mais recente ao mais antigo. A rolagem vertical da página continua nativa, sem converter movimentos da rodinha em deslocamento lateral.
