@@ -33,7 +33,7 @@ body>.cursor-smoke[hidden]{display:none}
 
 /* Projects scroll sideways within their own region; page scrolling stays native. */
 .filters{flex-wrap:wrap}
-.projects-section>.wrap{max-width:none}
+.projects-section>.wrap{max-width:1280px}
 .project-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 0}
 .project-navigation[hidden]{display:none}
 .project-navigation p{font-size:12px;color:#586457;margin:0}
@@ -43,13 +43,13 @@ body>.cursor-smoke[hidden]{display:none}
 .project-arrows button:disabled{opacity:.35;cursor:default}
 .project-list{display:flex;align-items:flex-start;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:6px;width:100%;margin:18px auto 0;padding:8px 6px 24px;scrollbar-width:thin;scrollbar-color:#698b36 #dce2d5}
 .project-list:focus-visible{outline:2px solid #547727;outline-offset:4px}
-.project-list>.project{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;flex:0 0 100%;min-width:0;gap:22px 48px;padding:32px;border:1px solid #c9d0c3;border-radius:10px;background:#f5f6f0;scroll-snap-align:start;scroll-snap-stop:always}
+.project-list>.project{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;flex:0 0 100%;min-width:0;gap:20px 36px;padding:28px;border:1px solid #c9d0c3;border-radius:10px;background:#f5f6f0;scroll-snap-align:start;scroll-snap-stop:always}
 .project-list .project-date{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;line-height:1.2}
 .project-list .project-date strong{display:inline;font-size:24px}
-.project-list .project-visual{grid-column:1;aspect-ratio:1.55}
+.project-list .project-visual{grid-column:1;aspect-ratio:1.7}
 .project-list .project-info{grid-column:2;min-width:0;padding:0;display:flex;flex-direction:column;flex:1}
-.project-list .project-info h3{font-size:clamp(26px,2.5vw,40px);margin-bottom:12px}
-.project-list .project-info p{font-size:16px;line-height:1.75;margin-bottom:18px}
+.project-list .project-info h3{font-size:clamp(26px,2.4vw,34px);margin-bottom:12px}
+.project-list .project-info p{font-size:15px;line-height:1.75;margin-bottom:18px}
 .project-list .tags{gap:7px;margin-bottom:20px}
 .project-list .tags span{font-size:10px;padding:4px 8px}
 .project-list .project-award{padding:12px 14px;margin:12px 0 16px}
@@ -59,3 +59,9 @@ body>.cursor-smoke[hidden]{display:none}
 @media(max-width:900px){.project-list>.project{gap:20px 28px;padding:24px}.project-list .project-info p{font-size:14px}}
 @media(max-width:720px){.project-navigation{flex-direction:column}.project-list{gap:16px}.project-list>.project{grid-template-columns:minmax(0,1fr);padding:18px}.project-list .project-visual,.project-list .project-info{grid-column:1}}
 @media print{.project-navigation{display:none}.project-list{display:block;overflow:visible;max-width:none}.project-list>.project{break-inside:avoid;margin-bottom:20px}}
+
+/* Replay the description entrance when its project becomes current. */
+.project.is-current .project-info{animation:project-description-in .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes project-description-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.project.is-current .project-info{animation:none}}
+@media print{.project.is-current .project-info{animation:none}}

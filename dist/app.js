@@ -83,6 +83,10 @@ function updateProjectNavigation(){
   projectNavigation.hidden=limit<=2;
   previousProject.disabled=list.scrollLeft<=2;
   nextProject.disabled=list.scrollLeft>=limit-2;
+  const cards=[...list.querySelectorAll('.project')];
+  const step=(cards[0]?.getBoundingClientRect().width||0)+parseFloat(getComputedStyle(list).gap);
+  const current=Math.max(0,Math.min(cards.length-1,Math.round(list.scrollLeft/step)));
+  cards.forEach((card,index)=>card.classList.toggle('is-current',index===current));
 }
 function moveProjects(direction){
   const card=list.querySelector('.project');
