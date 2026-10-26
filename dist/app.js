@@ -149,14 +149,31 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.hash==='#'+entry.target.id));}});},{rootMargin:'-20% 0px -55% 0px'});
 document.querySelectorAll('main section[id]').forEach(s=>observer.observe(s));
 const form=document.querySelector('#contact-form');
-form.addEventListener('submit',event=>{
- ['name','message'].forEach(id=>{const field=form.elements[id];field.value=field.value.trim();});
- form.elements.email.value=form.elements.email.value.trim();
- if(form.elements._honey.value || !form.reportValidity()){event.preventDefault();return;}
- // Envio nativo: o serviço oferece captcha, ativação do destinatário e confirmação.
- // Não exibir sucesso antes da resposta real do serviço de e-mail.
- document.querySelector('#form-status').textContent=text('Abrindo a confirmação de envio…','Opening the delivery confirmation…');
+let contactSending=false;
+form.addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(contactSending)return;
+ ['name','message','email'].forEach(id=>{form.elements[id].value=form.elements[id].value.trim();});
+ if(form.elements._honey.value || !form.reportValidity())return;
+ const status=document.querySelector('#form-status'),button=form.querySelector('[type="submit"]');
+ contactSending=true;button.disabled=true;form.setAttribute('aria-busy','true');
+ status.textContent=text('Enviando sua mensagem…','Sending your message…');
+ try{
+  const response=await fetch('https://formsubmit.co/ajax/enzofalcantara@gmail.com',{
+   method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+   body:JSON.stringify(Object.fromEntries(new FormData(form))),signal:AbortSignal.timeout(20000)
+  });
+  const result=await response.json();
+  if(!response.ok || !(result.success===true || result.success==='true') || /activat|ativar|verify|verifi/i.test(result.message||''))throw Error('unavailable');
+  form.reset();
+  status.textContent=text('Mensagem aceita para envio! Obrigado pelo contato.','Message accepted for sending! Thank you for getting in touch.');
+ }catch(error){
+  status.textContent=text('Não foi possível confirmar o envio. Sua mensagem continua aqui. Tente novamente ou envie diretamente para enzofalcantara@gmail.com.','We could not confirm sending. Your message is still here. Try again or email enzofalcantara@gmail.com directly.');
+ }finally{
+  contactSending=false;button.disabled=false;form.removeAttribute('aria-busy');
+ }
 });
+
 setLanguage(language);
 revealOnScroll();
 

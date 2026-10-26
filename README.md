@@ -282,3 +282,8 @@ A seção apresenta nove certificados de conclusão fornecidos por Enzo, com ima
 ### Disponibilidade dos dados do GitHub
 
 A publicação e uma atualização a cada seis horas geram `dist/data/github.json` no GitHub Actions, com dados públicos do perfil, repositórios, eventos e colaboradores do Estagi.ON. O GITHUB_TOKEN permanece no ambiente da publicação e nunca é enviado ao navegador. Se uma consulta falhar, a última versão publicada é preservada. As análises de outros repositórios usam a API pública e cache local; continuam sujeitas aos limites do GitHub. A data da análise é exibida.
+
+
+### Envio de contato na própria página
+
+O formulário envia por AJAX ao FormSubmit e apresenta o resultado sem navegar para outra página. Bloqueia envios duplicados enquanto aguarda, valida os campos, mantém a mensagem em caso de falha e só limpa o formulário após resposta positiva. O destinatário precisa ativar o formulário uma única vez pelo e-mail do serviço. Uma resposta de aceitação não comprova entrega na caixa de entrada.
