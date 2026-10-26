@@ -102,3 +102,15 @@ body>.cursor-smoke[hidden]{display:none}
 .project-arrows button:hover:not(:disabled){background:#17251d;color:#e7f7d7;border-color:#17251d}
 @media(max-width:720px){.project-navigation{width:auto;grid-template-columns:1fr auto;gap:8px;margin-top:4px}.project-pagination{grid-column:1;justify-content:flex-start;gap:0}.project-pagination button{width:24px;height:40px}.project-pagination button[aria-current=true]{width:24px}.project-pagination button[aria-current=true]:before{width:20px}.project-navigation .project-arrows{grid-column:2;gap:8px}.project-arrows button{width:40px;height:40px;min-width:40px}}
 @media print{.project-navigation{display:none}}
+
+/* Arrows flank the current card; pagination remains centered below. */
+.project-carousel{position:relative}
+.project-navigation{display:flex;justify-content:center;margin:8px 6px 0}
+.project-navigation .project-arrows{display:contents}
+.project-navigation .project-arrows button{position:absolute;z-index:2;top:calc(50% - 28px);transform:translateY(-50%);background:#fff;box-shadow:0 2px 8px #17251d1a}
+.project-navigation .project-previous{left:-16px}
+.project-navigation .project-next{right:-16px}
+.project-navigation .project-arrows button:hover:not(:disabled){background:#17251d}
+.project-navigation .project-arrows button:disabled{opacity:.5}
+@media(max-width:720px){.project-navigation{justify-content:center}.project-pagination{justify-content:center}.project-navigation .project-previous{left:-8px}.project-navigation .project-next{right:-8px}}
+@media print{.project-navigation{display:none}}
