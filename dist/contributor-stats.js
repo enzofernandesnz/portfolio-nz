@@ -20,11 +20,20 @@
     event?.preventDefault();let repo;
     try{repo=parseRepo(input.value);}catch{setStatus('Informe um repositório válido do GitHub, por exemplo dono/projeto.','Enter a valid GitHub repository, for example owner/project.');return;}
     if(controller)controller.abort();const active=new AbortController();controller=active;submit.disabled=true;cancel.hidden=false;results.hidden=true;data=null;
-    const name=`${repo.owner}/${repo.repo}`;setStatus(`Consultando ${name} no GitHub…`,`Checking ${name} on GitHub…`);
+    const name=`${repo.owner}/${repo.repo}`;let saved=null;setStatus(`Consultando ${name} no GitHub…`,`Checking ${name} on GitHub…`);
     try{
-      let response;
+      const key='contributors:'+name.toLowerCase();
+      const published=(await window.nzGithubData.snapshot).contributors?.[name.toLowerCase()];
+      const cached=window.nzGithubData.read(key);
+      saved=published && (!cached || published.updatedAt>cached.updatedAt) ? published : cached;
+      if(controller!==active)return;
+      let response, raw;
+      if(saved){ raw=saved.data; }
+      else {
+      const blocked=window.nzGithubData.read('blockedUntil');
+      if(blocked && Date.now()<blocked)throw Error('limit');
       for(let i=0;i<6;i++){
-        const url=`https://api.github.com/repos/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.repo)}/stats/contributors?attempt=${Date.now()}`;
+        const url=`https://api.github.com/repos/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.repo)}/stats/contributors`;
         response=await fetch(url,{headers:{Accept:'application/vnd.github+json'},signal:active.signal});
         if(response.status!==202)break;
         setStatus(`O GitHub está preparando as estatísticas. Tentativa ${i+1} de 6…`,`GitHub is preparing the statistics. Attempt ${i+1} of 6…`);
@@ -32,9 +41,16 @@
       }
       if(response.status===202)throw Error('pending');
       if(response.status===404)throw Error('notfound');
-      if(response.status===403||response.status===429)throw Error('limit');
+      if(response.status===403||response.status===429){
+        const reset=Number(response.headers.get('x-ratelimit-reset'))*1000;
+        const retry=Number(response.headers.get('retry-after'))*1000;
+        window.nzGithubData.save('blockedUntil',Math.max(Date.now()+60000,reset||Date.now()+(retry||3600000)));throw Error('limit');
+      }
       if(!response.ok)throw Error('network');
-      const raw=response.status===204?[]:await response.json();if(!Array.isArray(raw))throw Error('network');
+      raw=response.status===204?[]:await response.json();if(!Array.isArray(raw))throw Error('network');
+      saved={data:raw,updatedAt:new Date().toISOString()};window.nzGithubData.save(key,saved);
+      }
+      if(!Array.isArray(raw))throw Error('network');
       if(controller!==active)return;
       data=raw.map((item,index)=>{
         const weeks=Array.isArray(item.weeks)?item.weeks:[];
@@ -45,8 +61,8 @@
       });
       analyzedRepo=name;
       if(!data.length){setStatus('O GitHub não retornou colaboradores para este repositório.','GitHub returned no contributors for this repository.');return;}
-      renderResults();results.hidden=false;setStatus('Estatísticas carregadas da branch principal.','Statistics loaded from the default branch.');
-    }catch(error){if(controller!==active)return;if(error.name==='AbortError')setStatus('Análise cancelada.','Analysis canceled.');else if(error.message==='pending')setStatus('O GitHub ainda está preparando os dados. Tente novamente em alguns instantes.','GitHub is still preparing the data. Please try again shortly.');else if(error.message==='notfound')setStatus('Repositório não encontrado ou não é público. Confira o endereço.','Repository not found or not public. Check the address.');else if(error.message==='limit')setStatus('O limite de consultas públicas do GitHub foi atingido. Tente novamente mais tarde.','The GitHub public request limit was reached. Please try again later.');else setStatus('Não foi possível carregar os dados. Confira sua conexão e tente novamente.','Could not load the data. Check your connection and try again.');}
+      renderResults();results.hidden=false;setStatus(`Estatísticas da branch principal. Atualizadas em ${new Date(saved.updatedAt).toLocaleString('pt-BR')}.`,`Default-branch statistics. Updated ${new Date(saved.updatedAt).toLocaleString('en-US')}.`);
+    }catch(error){if(controller!==active)return;if(error.name==='AbortError')setStatus('Análise cancelada.','Analysis canceled.');else if(error.message==='pending')setStatus('O GitHub ainda está preparando os dados. Tente novamente em alguns instantes.','GitHub is still preparing the data. Please try again shortly.');else if(error.message==='notfound')setStatus('Repositório não encontrado ou não é público. Confira o endereço.','Repository not found or not public. Check the address.');else if(error.message==='limit')setStatus(`O GitHub limitou novas consultas nesta conexão. Tente após ${new Date(window.nzGithubData.read('blockedUntil')||Date.now()+3600000).toLocaleTimeString('pt-BR')}. A análise do Estagi.ON continua disponível.`,`GitHub limited new requests on this connection. Try after ${new Date(window.nzGithubData.read('blockedUntil')||Date.now()+3600000).toLocaleTimeString('en-US')}. The Estagi.ON analysis remains available.`);else setStatus('Não foi possível carregar os dados. Confira sua conexão e tente novamente.','Could not load the data. Check your connection and try again.');}
     finally{if(controller===active){controller=null;submit.disabled=false;cancel.hidden=true;}}
   }
   function renderResults(){

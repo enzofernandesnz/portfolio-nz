@@ -77,6 +77,15 @@
   function render(){renderProfile();renderTicker();renderContributions();renderRepos();}
   async function getJson(url){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);try{const res=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});if(!res.ok)throw new Error(`HTTP ${res.status}`);return await res.json();}finally{clearTimeout(timeout);}}
   const sources={profile:`https://api.github.com/users/${user}`,repos:`https://api.github.com/users/${user}/repos?per_page=100&sort=updated`,events:`https://api.github.com/users/${user}/events/public?per_page=100`,contributions:`https://github-contributions-api.jogruber.de/v4/${user}?y=last`};
-  Object.entries(sources).forEach(async ([key,url])=>{try{state[key]=await getJson(url);}catch{state.errors[key]=true;}render();});
+  Object.entries(sources).forEach(async ([key,url])=>{
+    const published=(await window.nzGithubData.snapshot)[key];
+    const cached=window.nzGithubData.read(key);
+    const entry=published && (!cached || published.updatedAt>cached.updatedAt) ? published : cached;
+    if(entry){state[key]=entry.data;render();}
+    // Published GitHub data avoids spending the visitor's API quota.
+    if(published || (entry && Date.now()-Date.parse(entry.updatedAt)<3600000))return;
+    try{state[key]=await getJson(url);window.nzGithubData.save(key,{data:state[key],updatedAt:new Date().toISOString()});}
+    catch{state.errors[key]=true;}render();
+  });
   new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 })();

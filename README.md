@@ -277,3 +277,8 @@ O painel Contributor Stats, inspirado no [exemplo do professor](https://github.c
 ### Certificados
 
 A seção apresenta nove certificados de conclusão fornecidos por Enzo, com imagens dos documentos, data, instituição e navegação horizontal suave, com a descrição animada. As versões com o mesmo curso em anos diferentes são mantidas separadas; arquivos duplicados não são exibidos novamente. Os cartões de projetos e certificados compartilham um estilo mais simples e adaptável a telas pequenas.
+
+
+### Disponibilidade dos dados do GitHub
+
+A publicação e uma atualização a cada seis horas geram `dist/data/github.json` no GitHub Actions, com dados públicos do perfil, repositórios, eventos e colaboradores do Estagi.ON. O GITHUB_TOKEN permanece no ambiente da publicação e nunca é enviado ao navegador. Se uma consulta falhar, a última versão publicada é preservada. As análises de outros repositórios usam a API pública e cache local; continuam sujeitas aos limites do GitHub. A data da análise é exibida.
