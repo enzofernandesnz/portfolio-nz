@@ -83,3 +83,21 @@ body>.cursor-smoke[hidden]{display:none}
 @keyframes project-description-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.project.is-current .project-info{animation:none}}
 @media print{.project.is-current .project-info{animation:none}}
+
+/* Bottom carousel controls: centered position markers and circular arrows. */
+.project-navigation{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin:8px 6px 0}
+.project-pagination{grid-column:2;display:flex;align-items:center;justify-content:center;gap:2px}
+.project-pagination button{position:relative;display:grid;place-items:center;width:28px;height:44px;padding:0;background:none;border:0;border-radius:8px;color:#8b978f}
+.project-pagination button:before{content:'';width:5px;height:5px;border-radius:8px;background:currentColor;transition:width .25s,background .25s}
+.project-pagination button[aria-current=true]{width:42px;color:#334d3c}
+.project-pagination button[aria-current=true]:before{width:32px;height:6px}
+.project-pagination button:hover{color:#4a703a;background:#e6efd780}
+.project-navigation .project-arrows{grid-column:3;justify-self:end;gap:10px}
+.project-arrows button{position:relative;width:44px;height:44px;min-width:44px;border-radius:50%;padding:0;justify-content:center;background:transparent;border-color:#b4bfb7;gap:0}
+.project-arrows button>span:not([aria-hidden]){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.project-arrows button>span[aria-hidden]{position:relative;font-size:0;display:block;width:100%;height:100%}
+.project-arrows button>span[aria-hidden]:after{content:'';position:absolute;top:50%;left:47%;width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:translate(-50%,-50%) rotate(45deg)}
+.project-arrows .project-previous>span[aria-hidden]:after{left:53%;transform:translate(-50%,-50%) rotate(-135deg)}
+.project-arrows button:hover:not(:disabled){background:#17251d;color:#e7f7d7;border-color:#17251d}
+@media(max-width:720px){.project-navigation{width:auto;grid-template-columns:1fr auto;gap:8px;margin-top:4px}.project-pagination{grid-column:1;justify-content:flex-start;gap:0}.project-pagination button{width:24px;height:40px}.project-pagination button[aria-current=true]{width:24px}.project-pagination button[aria-current=true]:before{width:20px}.project-navigation .project-arrows{grid-column:2;gap:8px}.project-arrows button{width:40px;height:40px;min-width:40px}}
+@media print{.project-navigation{display:none}}

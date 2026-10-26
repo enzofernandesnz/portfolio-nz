@@ -71,6 +71,20 @@ function renderProjects(){
     article.querySelector('.details')?.addEventListener('click',()=>openProject(project));
     list.append(article);
   });
+  const pagination=document.querySelector('.project-pagination');
+  pagination.replaceChildren();
+  pagination.setAttribute('aria-label',text('Selecionar projeto','Select project'));
+  [...list.children].forEach((card,index)=>{
+    const dot=document.createElement('button');
+    dot.type='button';
+    dot.setAttribute('aria-controls','project-list');
+    dot.setAttribute('aria-label',`${text('Ir para projeto','Go to project')} ${index+1}: ${card.querySelector('h3').textContent}`);
+    dot.addEventListener('click',()=>{
+      const step=card.getBoundingClientRect().width+parseFloat(getComputedStyle(list).gap);
+      list.scrollTo({left:index*step,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    });
+    pagination.append(dot);
+  });
   revealOnScroll(list);
   list.scrollTo({left:0,behavior:'instant'});
   requestAnimationFrame(updateProjectNavigation);
@@ -87,7 +101,10 @@ function updateProjectNavigation(){
   const step=(cards[0]?.getBoundingClientRect().width||0)+parseFloat(getComputedStyle(list).gap);
   const current=Math.max(0,Math.min(cards.length-1,Math.round(list.scrollLeft/step)));
   cards.forEach((card,index)=>card.classList.toggle('is-current',index===current));
-  document.querySelector('.project-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')}`;
+  document.querySelectorAll('.project-pagination button').forEach((dot,index)=>{
+    if(index===current)dot.setAttribute('aria-current','true');
+    else dot.removeAttribute('aria-current');
+  });
 }
 function moveProjects(direction){
   const card=list.querySelector('.project');
