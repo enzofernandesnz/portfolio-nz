@@ -7,6 +7,7 @@
   <title>Enzo Fernandes | Desenvolvimento, dados & IA</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v=project-side-arrows"><link rel="stylesheet" href="skills-globe.css">
   <script src="app.js?v=project-pagination" defer></script>
+  <link rel="stylesheet" href="github-activity.css?v=1"><script src="github-activity.js?v=1" defer></script>
   <script src="skills-globe.js" defer></script>
   <script src="splash-cursor.js" defer></script>
 </head>
@@ -16,7 +17,7 @@
 <header class="header"><div class="wrap nav-wrap">
   <a class="brand-name" href="#inicio" aria-label="Enzo Fernandes, início">nz<span>ENZO FERNANDES</span></a>
   <nav id="navigation" aria-label="Navegação principal">
-    <a href="#sobre" data-pt="Sobre mim" data-en="About">Sobre mim</a><a href="#projetos" data-pt="Projetos" data-en="Projects">Projetos</a><a href="#experiencias" data-pt="Experiências" data-en="Experience">Experiências</a><a href="#contato" data-pt="Contato" data-en="Contact">Contato</a>
+    <a href="#sobre" data-pt="Sobre mim" data-en="About">Sobre mim</a><a href="#projetos" data-pt="Projetos" data-en="Projects">Projetos</a><a href="#github" data-pt="GitHub" data-en="GitHub">GitHub</a><a href="#experiencias" data-pt="Experiências" data-en="Experience">Experiências</a><a href="#contato" data-pt="Contato" data-en="Contact">Contato</a>
   </nav>
   <div class="nav-actions"><div class="languages" aria-label="Idioma / Language"><button type="button" data-language="pt" aria-pressed="true">PT</button><span>/</span><button type="button" data-language="en" aria-pressed="false">EN</button></div><button type="button" class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="Abrir menu"><span></span><span></span></button></div>
 </div></header>
@@ -32,6 +33,7 @@
   </div>
   <div class="hero-bottom"><span data-pt="APRENDER. CONSTRUIR. EVOLUIR." data-en="LEARN. BUILD. EVOLVE.">APRENDER. CONSTRUIR. EVOLUIR.</span><a href="#sobre" data-pt="Conheça minha trajetória ↓" data-en="Explore my journey ↓">Conheça minha trajetória ↓</a></div>
 </section>
+<div class="github-ticker" aria-label="Atividade recente no GitHub"><div class="github-ticker-track"><span class="github-ticker-loading" data-pt="Carregando atividade recente do GitHub…" data-en="Loading recent GitHub activity…">Carregando atividade recente do GitHub…</span></div></div>
 <section class="section about wrap" id="sobre" aria-labelledby="about-title"><div class="section-label"><span>01 /</span><span data-pt="SOBRE MIM" data-en="ABOUT ME">SOBRE MIM</span></div>
   <div class="about-grid"><div class="about-heading"><h2 id="about-title" data-pt="Tecnologia com propósito. Aprendizado sem pausa." data-en="Technology with purpose. Learning without limits.">Tecnologia com propósito.<br>Aprendizado sem pausa.</h2>
   <div class="skills-world">
@@ -66,6 +68,19 @@
   <div id="project-list" class="project-list" role="region" aria-labelledby="projects-title" aria-live="polite" tabindex="0"></div><noscript><p>Ative o JavaScript para visualizar os projetos. <a href="https://github.com/enzofernandesnz">Ver projetos no GitHub.</a></p></noscript>
   <div class="project-navigation" hidden><div class="project-pagination" role="group" aria-label="Selecionar projeto"></div><div class="project-arrows"><button type="button" class="project-previous" aria-controls="project-list"><span aria-hidden="true">←</span> <span data-pt="Anterior" data-en="Previous">Anterior</span></button><button type="button" class="project-next" aria-controls="project-list"><span data-pt="Próximo" data-en="Next">Próximo</span> <span aria-hidden="true">→</span></button></div></div>
   </div>
+</div></section>
+<section class="github-section" id="github" aria-labelledby="github-title"><div class="wrap section">
+  <div class="section-label"><span>↗ /</span><span>GITHUB</span></div>
+  <div class="github-heading"><div><h2 id="github-title" data-pt="Código em movimento." data-en="Code in motion.">Código em movimento.</h2><p data-pt="Um pouco do que venho construindo no GitHub." data-en="A look at what I have been building on GitHub.">Um pouco do que venho construindo no GitHub.</p></div><a class="github-profile-link" href="https://github.com/enzofernandesnz" target="_blank" rel="noopener noreferrer">@enzofernandesnz ↗</a></div>
+  <div class="github-dashboard">
+    <div class="github-contributions-card"><div class="github-card-head"><div><span class="github-kicker" data-pt="ATIVIDADE NO ÚLTIMO ANO" data-en="ACTIVITY OVER THE LAST YEAR">ATIVIDADE NO ÚLTIMO ANO</span><p class="github-total"><strong id="github-total">—</strong> <span data-pt="contribuições" data-en="contributions">contribuições</span></p></div><span class="github-live"><i></i> <span data-pt="Dados públicos" data-en="Public data">Dados públicos</span></span></div>
+    <div class="github-heatmap-scroll"><div class="github-heatmap" tabindex="0" aria-label="Calendário de contribuições do GitHub"></div></div>
+    <div class="github-heatmap-footer"><span class="github-day-info" role="status" data-pt="Passe o mouse ou use as setas para explorar" data-en="Hover or use arrow keys to explore">Passe o mouse ou use as setas para explorar</span><span class="github-legend"><span data-pt="Menos" data-en="Less">Menos</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span data-pt="Mais" data-en="More">Mais</span></span></div>
+    <p class="github-graph-error" role="status" hidden></p></div>
+    <div class="github-stats"><div><strong id="github-repo-count">—</strong><span data-pt="repositórios públicos" data-en="public repositories">repositórios públicos</span></div><div><strong id="github-active-days">—</strong><span data-pt="dias com contribuições" data-en="days with contributions">dias com contribuições</span></div><div><strong id="github-current-streak">—</strong><span data-pt="sequência atual" data-en="current streak">sequência atual</span></div><div><strong id="github-longest-streak">—</strong><span data-pt="maior sequência no ano" data-en="longest streak this year">maior sequência no ano</span></div></div>
+  </div>
+  <div class="github-repos-heading"><h3 data-pt="Repositórios atualizados recentemente" data-en="Recently updated repositories">Repositórios atualizados recentemente</h3><a href="https://github.com/enzofernandesnz?tab=repositories" target="_blank" rel="noopener noreferrer" data-pt="Ver todos no GitHub ↗" data-en="See all on GitHub ↗">Ver todos no GitHub ↗</a></div>
+  <div class="github-repos" aria-live="polite"><p class="github-repos-status" data-pt="Carregando repositórios…" data-en="Loading repositories…">Carregando repositórios…</p></div>
 </div></section>
 <section class="section wrap" id="experiencias" aria-labelledby="experience-title"><div class="section-label"><span>03 /</span><span data-pt="EXPERIÊNCIAS & FORMAÇÃO" data-en="EXPERIENCE & EDUCATION">EXPERIÊNCIAS & FORMAÇÃO</span></div><div class="experience-grid"><div><h2 id="experience-title" data-pt="Construindo minha trajetória." data-en="Building my journey.">Construindo<br>minha trajetória.</h2><p class="muted" data-pt="Da formação técnica à aplicação no dia a dia." data-en="From technical education to everyday practice.">Da formação técnica à aplicação no dia a dia.</p></div><div class="experience-list">
   <article class="experience"><div class="experience-meta"><span data-pt="2026 — ATUAL" data-en="2026 — PRESENT">2026 — ATUAL</span><span class="badge" data-pt="PROFISSIONAL" data-en="PROFESSIONAL">PROFISSIONAL</span></div><h3 data-pt="Analista de dados e administração" data-en="Data and administration analyst">Analista de dados e administração</h3><h4 data-pt="Empresa privada" data-en="Private company">Empresa privada</h4><p data-pt="Atuação em análise de dados e rotinas administrativas, com uso de inteligência artificial para auxiliar processos relacionados a clientes e outras atividades da empresa." data-en="Working with data analysis and administrative routines, using artificial intelligence to support client-related processes and other company activities.">Atuação em análise de dados e rotinas administrativas, com uso de inteligência artificial para auxiliar processos relacionados a clientes e outras atividades da empresa.</p></article>
