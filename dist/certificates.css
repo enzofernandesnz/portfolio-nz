@@ -19,3 +19,13 @@
 @media(max-width:720px){.certificate-heading{align-items:flex-start}.certificate-heading h2{font-size:30px}.certificate-heading p{font-size:13px}.certificate-card{grid-template-columns:minmax(0,1fr);gap:20px;padding:18px;border-radius:18px}.certificate-info h3{font-size:26px}.certificate-prev,.certificate-next{width:40px;height:40px}.certificate-prev{left:-8px}.certificate-next{right:-8px}.certificate-pagination{gap:0}.certificate-pagination button,.certificate-pagination button[aria-current=true]{width:24px;height:40px}.certificate-pagination button[aria-current=true]:before{width:20px}.certificate-count{padding-top:7px}}
 @media(prefers-reduced-motion:reduce){.certificate-pagination button:before{transition:none}}
 @media print{.certificates-section{background:#fff}.certificate-prev,.certificate-next,.certificate-pagination,.certificate-open{display:none}.certificate-card{box-shadow:none}}
+
+/* Native sideways transition, matching the projects carousel. */
+.certificate-track{display:flex;align-items:flex-start;gap:22px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
+.certificate-track::-webkit-scrollbar{display:none;width:0;height:0}
+.certificate-track:focus-visible{outline:2px solid #547727;outline-offset:4px}
+.certificate-track>.certificate-card{flex:0 0 100%;min-width:0;scroll-snap-align:start}
+.certificate-card.is-current .certificate-info{animation:project-description-in .5s cubic-bezier(.22,1,.36,1) both}
+@media(max-width:720px){.certificate-track{gap:16px}}
+@media(prefers-reduced-motion:reduce){.certificate-card.is-current .certificate-info{animation:none}}
+@media print{.certificate-track{display:block;overflow:visible}.certificate-track>.certificate-card{margin-bottom:20px}.certificate-card.is-current .certificate-info{animation:none}}

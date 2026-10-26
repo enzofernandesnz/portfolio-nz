@@ -276,4 +276,4 @@ O painel Contributor Stats, inspirado no [exemplo do professor](https://github.c
 
 ### Certificados
 
-A seção apresenta nove certificados de conclusão fornecidos por Enzo, com imagens dos documentos, data, instituição e navegação individual. As versões com o mesmo curso em anos diferentes são mantidas separadas; arquivos duplicados não são exibidos novamente. Os cartões de projetos e certificados compartilham um estilo mais simples e adaptável a telas pequenas.
+A seção apresenta nove certificados de conclusão fornecidos por Enzo, com imagens dos documentos, data, instituição e navegação horizontal suave, com a descrição animada. As versões com o mesmo curso em anos diferentes são mantidas separadas; arquivos duplicados não são exibidos novamente. Os cartões de projetos e certificados compartilham um estilo mais simples e adaptável a telas pequenas.

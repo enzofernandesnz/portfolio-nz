@@ -4,7 +4,7 @@ const revealOnScroll = (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const registered = new WeakSet();
   const pending = new Set();
-  const selector = '.section-label, #about-title, .skills-world, .about-content > *, .skills > div, .section-heading, .project-controls, .timeline-note, .project, .experience-grid > div:first-child, .experience, .contact-grid > div > h2, .contact-grid > div > p, .contact-links > a, #contact-form';
+  const selector = '.section-label, #about-title, .skills-world, .about-content > *, .skills > div, .section-heading, .project-controls, .timeline-note, .project, #certificates-title, .certificate-carousel, .experience-grid > div:first-child, .experience, .contact-grid > div > h2, .contact-grid > div > p, .contact-links > a, #contact-form';
   function show(element, instant = false) {
     if (instant) element.classList.add('reveal-instant');
     element.classList.add('is-revealed');
