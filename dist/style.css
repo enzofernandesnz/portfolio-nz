@@ -34,7 +34,7 @@ body>.cursor-smoke[hidden]{display:none}
 /* Projects scroll sideways within their own region; page scrolling stays native. */
 .filters{flex-wrap:wrap}
 .projects-section>.wrap{max-width:1280px}
-.project-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 0}
+.project-navigation{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:26px 0 0}
 .project-navigation[hidden]{display:none}
 .project-navigation p{font-size:12px;color:#586457;margin:0}
 .project-arrows{display:flex;gap:8px}
