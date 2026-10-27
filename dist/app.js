@@ -58,7 +58,7 @@ const text=(pt,en)=>language==='pt'?pt:en;
 const list=document.querySelector('#project-list');
 function renderProjects(){
   list.replaceChildren();
-  [...projects].sort((a,b)=>b.date.localeCompare(a.date)).forEach(project=>{
+  [...projects].sort((a,b)=>(a.id==='estagi-on'?-1:b.id==='estagi-on'?1:b.date.localeCompare(a.date))).forEach(project=>{
     const article=document.createElement('article');article.className='project';
     const date=new Date(project.date+'T12:00:00');
     const month=date.toLocaleDateString(language==='pt'?'pt-BR':'en-US',{month:'short'}).replace('.','').toUpperCase();
