@@ -54,12 +54,11 @@ const projects = [
 ];
 let language='pt';
 try { language=localStorage.getItem('portfolio-language')==='en'?'en':'pt'; } catch {}
-let filter='all';
 const text=(pt,en)=>language==='pt'?pt:en;
 const list=document.querySelector('#project-list');
 function renderProjects(){
   list.replaceChildren();
-  projects.filter(p=>filter==='all'||p.category===filter).sort((a,b)=>b.date.localeCompare(a.date)).forEach(project=>{
+  [...projects].sort((a,b)=>b.date.localeCompare(a.date)).forEach(project=>{
     const article=document.createElement('article');article.className='project';
     const date=new Date(project.date+'T12:00:00');
     const month=date.toLocaleDateString(language==='pt'?'pt-BR':'en-US',{month:'short'}).replace('.','').toUpperCase();
@@ -133,14 +132,12 @@ function setLanguage(next){
  document.querySelectorAll('[data-placeholder-pt]').forEach(el=>el.placeholder=el.dataset[next==='pt'?'placeholderPt':'placeholderEn']);
  document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===next)));
  document.querySelector('#navigation').setAttribute('aria-label',text('Navegação principal','Main navigation'));
- document.querySelector('.filters').setAttribute('aria-label',text('Filtrar projetos','Filter projects'));
  document.querySelector('.menu-toggle').setAttribute('aria-label',text('Alternar menu','Toggle menu'));
  document.title=text('Enzo Fernandes | Desenvolvimento, dados & IA','Enzo Fernandes | Development, data & AI');
  try {localStorage.setItem('portfolio-language',language);}catch{}
  renderProjects();
 }
 document.querySelectorAll('[data-language]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.language)));
-document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{filter=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderProjects();}));
 const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#navigation');
 function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}
 menu.addEventListener('click',()=>{const opened=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(opened));});
