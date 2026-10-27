@@ -291,4 +291,4 @@ O formulário envia por AJAX ao FormSubmit e apresenta o resultado sem navegar p
 
 ### Painel da trajetória
 
-A seção Experiências e Formação inclui um desenho decorativo de ramificações em pixels, com animação breve ao aparecer e ao passar o ponteiro ou clicar. O botão aceita teclado e respeita movimento reduzido.
+A seção Experiências e Formação inclui ramificações desenhadas por partículas: montagem conforme a rolagem, repulsão ao ponteiro e dispersão ao clicar com retorno elástico. O painel aceita teclado, pausa fora da tela e respeita movimento reduzido.
