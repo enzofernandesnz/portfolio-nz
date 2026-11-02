@@ -5,21 +5,20 @@
   const isEnglish = () => document.documentElement.lang === 'en';
   const tr = (pt, en) => isEnglish() ? en : pt;
   const make = (tag, className, text) => { const el=document.createElement(tag); if(className)el.className=className; if(text!==undefined)el.textContent=text; return el; };
-  const state = { profile:null, repos:null, events:null, contributions:null, errors:{} };
+  const state = { profile:null, repos:null, latestCommits:[], contributions:null, errors:{} };
   let selectedDay = null;
   function formatDate(date, options={day:'2-digit',month:'short',year:'numeric'}) {
     return new Date(date.length===10 ? date+'T12:00:00' : date).toLocaleDateString(isEnglish()?'en-US':'pt-BR',options).replace(/\./g,'');
   }
   function renderTicker() {
     const track=$('.github-ticker-track'); track.replaceChildren(); track.classList.remove('is-moving');
-    const events=(state.events||[]).filter(e=>e.type==='PushEvent' && e.repo?.name && e.created_at).slice(0,12);
-    if(!events.length) { track.append(make('span','github-ticker-empty',state.errors.events ? tr('Atividade recente indisponível.','Recent activity is unavailable.') : state.events ? tr('Sem atividade pública recente no GitHub.','No recent public GitHub activity.') : tr('Carregando atividade recente do GitHub…','Loading recent GitHub activity…'))); return; }
+    const commits=(state.latestCommits||[]).filter(commit=>commit.repo&&commit.date).slice(0,12);
+    if(!commits.length) { track.append(make('span','github-ticker-empty',tr('Carregando os últimos commits públicos…','Loading the latest public commits…'))); return; }
     const group=make('div','github-ticker-group');
-    for(const event of events) {
+    for(const commit of commits) {
       const item=make('span','github-ticker-item');
-      item.append(make('i','github-ticker-dot'),make('time','github-ticker-date',formatDate(event.created_at,{day:'2-digit',month:'short'})),make('strong','',`push(${event.repo.name.split('/').pop()})`));
-      const summary=event.payload?.commits?.[0]?.message?.split('\n')[0];
-      if(summary)item.append(make('span','github-ticker-summary',summary));
+      item.append(make('i','github-ticker-dot'),make('time','github-ticker-date',formatDate(commit.date,{day:'2-digit',month:'short'})),make('strong','',`commit(${commit.repo})`));
+      if(commit.message)item.append(make('span','github-ticker-summary',commit.message));
       group.append(item);
     }
     track.append(group); const copy=group.cloneNode(true);copy.setAttribute('aria-hidden','true');track.append(copy);track.classList.add('is-moving');
@@ -76,7 +75,9 @@
   function renderProfile(){ $('#github-repo-count').textContent=state.profile ? state.profile.public_repos.toLocaleString(isEnglish()?'en-US':'pt-BR') : '—'; }
   function render(){renderProfile();renderTicker();renderContributions();renderRepos();}
   async function getJson(url){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);try{const res=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});if(!res.ok)throw new Error(`HTTP ${res.status}`);return await res.json();}finally{clearTimeout(timeout);}}
-  const sources={profile:`https://api.github.com/users/${user}`,repos:`https://api.github.com/users/${user}/repos?per_page=100&sort=updated`,events:`https://api.github.com/users/${user}/events/public?per_page=100`,contributions:`https://github-contributions-api.jogruber.de/v4/${user}?y=last`};
+  const sources={profile:`https://api.github.com/users/${user}`,repos:`https://api.github.com/users/${user}/repos?per_page=100&sort=updated`,contributions:`https://github-contributions-api.jogruber.de/v4/${user}?y=last`};
+  window.nzGithubData.snapshot.then(snapshot=>{state.latestCommits=snapshot.latestCommits||[];renderTicker();});
+  window.nzGithubData.subscribe?.(snapshot=>{state.latestCommits=snapshot.latestCommits||[];renderTicker();});
   Object.entries(sources).forEach(async ([key,url])=>{
     const published=(await window.nzGithubData.snapshot)[key];
     const cached=window.nzGithubData.read(key);

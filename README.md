@@ -37,9 +37,9 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
 - Fumaça interativa SplashCursor apenas no início e em Sobre mim, incluindo as margens laterais dessas seções: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
-- Projetos em cartões na horizontal, gerados a partir de dados JavaScript, do mais recente ao mais antigo pela criação dos repositórios.
+- Projetos em cartões na horizontal, com o Estagi.ON fixado primeiro e os demais em ordem decrescente de criação dos repositórios.
 - Filtros por Front-end, Full stack e Java.
-- Imagens reais dos projetos disponíveis e ampliação em janela acessível.
+- Capturas dos projetos e ilustrações conceituais identificadas, com ampliação em janela acessível.
 - Histórico profissional e formação acadêmica.
 - Links de e-mail, WhatsApp, LinkedIn e GitHub.
 - Formulário com nome, e-mail e mensagem, validação nativa e envio pelo FormSubmit.
@@ -51,12 +51,13 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 |---|---|---|
 | Front-end | HTML5 | Conteúdo e estrutura semântica |
 | Estilos | CSS3, Grid e Flexbox | Layout, identidade visual e responsividade |
-| Interatividade | JavaScript ES moderno | Idiomas, filtros, timeline, menu e modal |
+| Interatividade | JavaScript ES moderno | Idiomas, projetos, timeline, menu e modal |
 | Back-end de contato | FormSubmit, serviço externo | Recebimento do POST, captcha e entrega por e-mail |
 | Servidor de desenvolvimento | Node.js 20+ | Servir a pasta `dist` localmente |
 | Efeito visual | SplashCursor / React Bits, adaptado para JavaScript nativo | Simulação de fluido em WebGL; código incluído localmente, sem dependências npm |
 | APIs nativas | LocalStorage, IntersectionObserver, Dialog, Constraint Validation | Preferências, navegação, modal e validação |
 | Protótipos | Figma | Wireframes de média fidelidade, editáveis |
+| Atualização GitHub | GitHub Actions e API REST pública | Snapshot dos commits mais recentes por repositório a cada 15 minutos; o navegador consulta o arquivo do próprio site a cada 5 minutos |
 | Hospedagem | GitHub Pages; configuração alternativa para Vercel | Distribuição dos arquivos estáticos |
 | Verificação | Playwright e Microsoft Edge | Testes de interface e capturas durante o desenvolvimento |
 
@@ -73,7 +74,7 @@ Visitante
   └── Formulário POST → FormSubmit → caixa de e-mail de Enzo
 ```
 
-O conteúdo permanece disponível sem uma consulta ao GitHub em tempo real. Assim, limites da API ou indisponibilidade do GitHub não impedem a leitura do portfólio. Os links para os repositórios continuam disponíveis.
+Os commits mostrados na faixa são atualizados pelo GitHub Actions a cada 15 minutos. O workflow consulta o commit mais recente de cada repositório público e publica um arquivo JSON estático; quando a página já está aberta, ela verifica esse arquivo a cada 5 minutos. Assim, visitantes não consomem a cota da API do GitHub e continuam vendo o último snapshot caso uma consulta falhe. A atualização é periódica, não instantânea.
 
 ### Fumaça interativa (SplashCursor)
 
@@ -159,13 +160,16 @@ A configuração está em `vercel.json`. Nenhuma variável de ambiente é necess
 ```text
 portfolio-enzo/
 ├── .github/workflows/pages.yml   # Publicação no GitHub Pages
+├── scripts/
+│   └── github-data.mjs           # Atualiza o snapshot de atividade pública
 ├── dist/
+│   ├── data/github.json          # Últimos commits e dados públicos em cache
 │   ├── index.html                # Página com as quatro seções
 │   ├── style.css                 # Estilos e regras responsivas
 │   ├── app.js                    # Conteúdo dinâmico e interações
 │   ├── splash-cursor.js          # Fumaça no início e em Sobre mim
 │   ├── licenses/                # Licença do componente React Bits
-│   └── assets/                   # Imagens reais e ícone nz
+│   └── assets/                   # Imagens e ilustrações identificadas, ícone nz
 ├── docs/
 │   ├── wireframes.webp            # Visão geral exportada do Figma
 │   ├── inicio.webp                # Captura do site
@@ -200,6 +204,8 @@ Capturas completas: [Desktop](docs/desktop.webp) · [Celular](docs/mobile.webp).
 
 | Data do repositório | Projeto | Tecnologias verificadas | Origem |
 |---|---|---|---|
+| 02/11/2026 | AlugaMais — locação de carros | React, Vite, Java, Spring Boot, PostgreSQL | [Repositório](https://github.com/enzofernandesnz/sistema-aluguel-carros) |
+| 30/10/2026 | Primor Móveis — site institucional | TypeScript, React, Vite, Cloudflare Workers | [Repositório](https://github.com/enzofernandesnz/primor-moveis-site) |
 | 13/08/2024 | Delivery | HTML, CSS | [Repositório](https://github.com/enzofernandesnz/delivery) |
 | 28/10/2024 | Display Grid | HTML, CSS Grid | [Repositório](https://github.com/enzofernandesnz/Display-grid) |
 | 08/08/2025 | Gerenciamento de Pedidos | C#, .NET 8, Blazor Server, Bootstrap | [Repositório](https://github.com/enzofernandesnz/atv6_blazor) |
@@ -208,7 +214,7 @@ Capturas completas: [Desktop](docs/desktop.webp) · [Celular](docs/mobile.webp).
 | 28/09/2026 | Perfil dos Candidatos — MG | Java, Spring Boot, Thymeleaf, OpenCSV | [Repositório](https://github.com/enzofernandesnz/Projeto-Candidatos-TSE-2) |
 | 28/09/2026 | Gestão de Oficina | Java, POO, ArrayList, Scanner | [Repositório](https://github.com/enzofernandesnz/prova1) |
 
-As descrições foram conferidas no código dos repositórios públicos. Estagi.ON e MEchanic são explicitamente apresentados como projetos em equipe. Display Grid é um exercício inspirado no layout Ogani. Repositórios de templates copiados por fork não foram apresentados como projetos próprios.
+Estagi.ON permanece em primeiro lugar na seção de projetos, conforme solicitado; os demais projetos seguem a data de criação em ordem decrescente. AlugaMais é apresentado como protótipo acadêmico cuja execução completa depende da configuração do backend e do PostgreSQL. As descrições foram conferidas nos repositórios públicos. Estagi.ON e MEchanic são explicitamente apresentados como projetos em equipe. Display Grid é um exercício inspirado no layout Ogani. Repositórios de templates copiados por fork não foram apresentados como projetos próprios.
 
 O Estagi.ON foi desenvolvido em grupo no 1º semestre de 2026. Enzo recebeu o certificado de melhor projeto de **Trabalho Interdisciplinar: Desenvolvimento de Aplicação Web**, conforme seu relato. A imagem do cartão é a [captura de listagem de vagas da documentação da equipe](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0427200-estagi-on/blob/master/docs/images/funcionalidades/Listagem_de_vagas.png).
 
@@ -281,7 +287,7 @@ A seção apresenta nove certificados de conclusão fornecidos por Enzo, com ima
 
 ### Disponibilidade dos dados do GitHub
 
-A publicação e uma atualização a cada seis horas geram `dist/data/github.json` no GitHub Actions, com dados públicos do perfil, repositórios, eventos e colaboradores do Estagi.ON. O GITHUB_TOKEN permanece no ambiente da publicação e nunca é enviado ao navegador. Se uma consulta falhar, a última versão publicada é preservada. As análises de outros repositórios usam a API pública e cache local; continuam sujeitas aos limites do GitHub. A data da análise é exibida.
+A publicação e uma atualização a cada 15 minutos geram `dist/data/github.json` no GitHub Actions, com dados públicos do perfil, repositórios, último commit de cada repositório e colaboradores do Estagi.ON. O GITHUB_TOKEN permanece no ambiente da publicação e nunca é enviado ao navegador. A página consulta o snapshot publicado a cada cinco minutos. Se uma consulta falhar, a última versão publicada é preservada. As análises de outros repositórios usam a API pública e cache local; continuam sujeitas aos limites do GitHub. A data da análise é exibida.
 
 
 ### Envio de contato na própria página
