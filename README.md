@@ -37,7 +37,7 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 - Navegação por âncoras: Sobre Mim, Projetos, Experiências e Contato.
 - Fumaça interativa SplashCursor apenas no início e em Sobre mim, incluindo as margens laterais dessas seções: responde ao mouse e ao toque, sem bloquear o conteúdo e respeita a preferência por movimento reduzido.
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
-- Animação de cobra em quadradinhos na área do GitHub, com movimento reduzido respeitado e o gráfico real de contribuições preservado logo abaixo.
+- Grade animada de contribuições do README do perfil do GitHub, com calendário estático quando o movimento reduzido está ativo ou a imagem está indisponível.
 - Projetos em cartões na horizontal, com o Estagi.ON fixado primeiro e os demais em ordem decrescente de criação dos repositórios.
 - Filtros por Front-end, Full stack e Java.
 - Capturas dos projetos e ilustrações conceituais identificadas, com ampliação em janela acessível.
