@@ -5,11 +5,13 @@
   "type": "module",
   "description": "Portfólio profissional - LAB01 DIAW - Enzo Fernandes Alcantara",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node server.mjs",
-    "check": "node --check dist/app.js && node --check dist/splash-cursor.js && node --check dist/skills-globe.js && node --check server.mjs"
+    "start": "vite --host 127.0.0.1 --port 4173",
+    "dev": "vite --host 127.0.0.1 --port 4173",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "check": "npm run build"
   },
-  "engines": {
-    "node": ">=20"
-  }
+  "engines": { "node": ">=22.12" },
+  "dependencies": { "react": "19.3.1", "react-dom": "19.3.1" },
+  "devDependencies": { "vite": "8.3.6" }
 }

@@ -1,3 +1,5 @@
+import { createEffectScope } from './lifecycle.js';
+
 /**
  * SplashCursor / React Bits — Copyright (c) 2026 David Haz.
  * MIT + Commons Clause: see licenses/LICENSE-react-bits.md.
@@ -6,7 +8,10 @@
  * Adapted for this vanilla-JavaScript portfolio: viewport-relative pointer coordinates,
  * full-width section clipping, reduced-motion support, visibility pause and GPU cleanup.
  */
-(() => {
+export function mountSplashCursor() {
+const scope = createEffectScope();
+const { requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout, queueMicrotask } = scope;
+
 'use strict';
 function createSplash(canvas, eventTarget, {
   SIM_RESOLUTION = 96,
@@ -1045,10 +1050,10 @@ function createSplash(canvas, eventTarget, {
       clickSplat(pointers[0]);
     }
     function handleLeave() { entered = false; pointers[0].moved = false; }
-    eventTarget.addEventListener('pointermove', handleMove, { passive: true });
-    eventTarget.addEventListener('pointerdown', handleDown, { passive: true });
-    eventTarget.addEventListener('pointerleave', handleLeave);
-    eventTarget.addEventListener('pointercancel', handleLeave);
+    scope.listen(eventTarget, 'pointermove', handleMove, { passive: true });
+    scope.listen(eventTarget, 'pointerdown', handleDown, { passive: true });
+    scope.listen(eventTarget, 'pointerleave', handleLeave);
+    scope.listen(eventTarget, 'pointercancel', handleLeave);
     return {
       resume() {
         if (isActive) return;
@@ -1079,13 +1084,15 @@ function createSplash(canvas, eventTarget, {
     }
 }
 
-const canvas = document.querySelector('body > .cursor-smoke');
+const canvas = document.querySelector('.cursor-smoke');
 const firstSection = document.querySelector('#inicio');
 const lastSection = document.querySelector('#sobre');
 const header = document.querySelector('.header');
-if (!canvas || !firstSection || !lastSection) return;
+if (!canvas || !firstSection || !lastSection) return scope.dispose;
+scope.preserveAttributes(canvas, ['style', 'hidden', 'width', 'height']);
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let effect = null;
+scope.onCleanup(() => { effect?.destroy(); effect = null; });
 let unavailable = false;
 let interacting = false;
 let scrolling = false;
@@ -1131,28 +1138,30 @@ function handleScroll() {
   scrollTimer = setTimeout(() => { scrolling = false; syncEffect(); }, 160);
 }
 syncEffect();
-window.addEventListener('pointermove', activateEffect, { passive: true, capture: true });
-window.addEventListener('pointerdown', activateEffect, { passive: true, capture: true });
-window.addEventListener('wheel', handleScroll, { passive: true });
-window.addEventListener('scroll', handleScroll, { passive: true });
-window.addEventListener('resize', syncEffect, { passive: true });
-const sectionObserver = new ResizeObserver(syncEffect);
+scope.listen(window, 'pointermove', activateEffect, { passive: true, capture: true });
+scope.listen(window, 'pointerdown', activateEffect, { passive: true, capture: true });
+scope.listen(window, 'wheel', handleScroll, { passive: true });
+scope.listen(window, 'scroll', handleScroll, { passive: true });
+scope.listen(window, 'resize', syncEffect, { passive: true });
+const sectionObserver = scope.observer(ResizeObserver, syncEffect);
 sectionObserver.observe(firstSection);
 sectionObserver.observe(lastSection);
 if (header) sectionObserver.observe(header);
-document.addEventListener('visibilitychange', syncEffect);
-reducedMotion.addEventListener('change', syncEffect);
-canvas.addEventListener('webglcontextlost', () => {
+scope.listen(document, 'visibilitychange', syncEffect);
+scope.listen(reducedMotion, 'change', syncEffect);
+scope.listen(canvas, 'webglcontextlost', () => {
   unavailable = true;
   effect?.pause();
   canvas.hidden = true;
 });
 // Release GPU resources on navigation; restore after a back/forward cache return.
-window.addEventListener('pagehide', () => {
+scope.listen(window, 'pagehide', () => {
   clearTimeout(idleTimer);
   clearTimeout(scrollTimer);
   interacting = scrolling = false;
   effect?.destroy(); effect = null;
 });
-window.addEventListener('pageshow', syncEffect);
-})();
+scope.listen(window, 'pageshow', syncEffect);
+
+return scope.dispose;
+}

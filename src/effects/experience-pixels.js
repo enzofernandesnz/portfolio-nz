@@ -1,8 +1,15 @@
+import { createEffectScope } from './lifecycle.js';
+
 /* Scroll-assembled particles with spring return, pointer repulsion and click burst. */
-(() => {
- const panel=document.querySelector('.experience-pixels');if(!panel)return;
+export function mountExperiencePixels() {
+const scope = createEffectScope();
+const { requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout, queueMicrotask } = scope;
+
+ const panel=document.querySelector('.experience-pixels');if(!panel)return scope.dispose;
+ scope.preserveAttributes(panel, ['aria-label', 'title']);
  const canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');panel.append(canvas);
- const ctx=canvas.getContext('2d');if(!ctx)return;
+ scope.onCleanup(() => { canvas.width = canvas.height = 0; canvas.remove(); });
+ const ctx=canvas.getContext('2d');if(!ctx){scope.dispose();return scope.dispose;}
  const motion=matchMedia('(prefers-reduced-motion: reduce)');
  const colors=['#1b2820','#304d2a','#496d33','#80ad43','#bef264'];
  let cells=[],size=0,pitch=0,progress=0,frame=0,last=0,visible=false,pointer=null,wave=null;
@@ -53,17 +60,19 @@
  function start(){if(visible&&!document.hidden&&!motion.matches&&!frame){last=0;frame=requestAnimationFrame(tick);}}
  function stop(){cancelAnimationFrame(frame);frame=0;last=0;}
  function position(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*size/r.width,y:(e.clientY-r.top)*size/r.height};}
- panel.addEventListener('pointermove',e=>{if(e.pointerType==='mouse')pointer=position(e);},{passive:true});
- panel.addEventListener('pointerleave',()=>pointer=null);
- panel.addEventListener('click',e=>{
+ scope.listen(panel, 'pointermove',e=>{if(e.pointerType==='mouse')pointer=position(e);},{passive:true});
+ scope.listen(panel, 'pointerleave',()=>pointer=null);
+ scope.listen(panel, 'click',e=>{
   if(motion.matches)return;const p=e.detail?position(e):{x:size/2,y:size/2};wave={...p,time:performance.now()};
   for(const c of cells){const dx=c.x-p.x,dy=c.y-p.y,d=Math.hypot(dx,dy)||1,radius=Math.max(160,pitch*14);if(d<radius){const force=(1-d/radius)**1.5;c.vx+=dx/d*force*16+(Math.random()-.5)*force*4;c.vy+=dy/d*force*16+(Math.random()-.5)*force*4;}}
   start();
  });
- new ResizeObserver(resize).observe(panel);
- new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible){if(motion.matches)draw(performance.now(),16);else start();}else{stop();reset();}},{rootMargin:'15% 0px'}).observe(panel);
- motion.addEventListener('change',()=>{stop();if(motion.matches)draw(performance.now(),16);else start();});
- document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+ scope.observer(ResizeObserver, resize).observe(panel);
+ scope.observer(IntersectionObserver, entries=>{visible=entries[0].isIntersecting;if(visible){if(motion.matches)draw(performance.now(),16);else start();}else{stop();reset();}},{rootMargin:'15% 0px'}).observe(panel);
+ scope.listen(motion, 'change',()=>{stop();if(motion.matches)draw(performance.now(),16);else start();});
+ scope.listen(document, 'visibilitychange',()=>document.hidden?stop():start());
  function labels(){const en=document.documentElement.lang==='en';panel.setAttribute('aria-label',en?'Interactive career branches: click to scatter the pixels':'Ramificações interativas da trajetória: clique para espalhar os pixels');panel.title=en?'Move the pointer or click':'Mova o mouse ou clique';}
- new MutationObserver(labels).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});labels();
-})();
+ scope.observer(MutationObserver, labels).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});labels();
+
+return scope.dispose;
+}

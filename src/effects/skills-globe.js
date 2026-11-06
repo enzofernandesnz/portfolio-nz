@@ -1,6 +1,11 @@
+import { createEffectScope } from './lifecycle.js';
+
 /* Adaptado de SkillsGlobe, Copyright (c) 2026 João Paulo Aramuni.
  * Licença MIT: licenses/LICENSE-skills-globe.txt. Adaptação para JavaScript nativo. */
-(() => {
+export function mountSkillsGlobe() {
+const scope = createEffectScope();
+const { requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout, queueMicrotask } = scope;
+
 "use strict";
 const DRAG_THRESHOLD = 6; // px: acima disso o clique vira arrasto e não abre o link
 const MAX_TILT = 1.1; // rad: limite da inclinação vertical
@@ -54,17 +59,31 @@ function rotate(p, rx, ry) {
 }
 
 const widget = document.querySelector('.skills-world');
-if (!widget) return;
+if (!widget) return scope.dispose;
 const stage = widget.querySelector('.skills-globe');
 const canvas = widget.querySelector('canvas');
+if (!stage || !canvas) return scope.dispose;
 const ctx = canvas.getContext('2d');
-if (!ctx) return;
+if (!ctx) return scope.dispose;
 const items = [...widget.querySelectorAll('.skills-globe-item')];
 const points = fibonacciSphere(items.length);
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 const toggle = widget.querySelector('.globe-toggle');
 const pause = widget.querySelector('.globe-pause');
+if (!toggle || !pause) return scope.dispose;
+scope.preserveAttributes(widget, ['class']);
+scope.preserveAttributes(canvas, ['width', 'height']);
+for (const item of items) scope.preserveAttributes(item, ['style']);
+for (const button of [toggle, pause]) {
+  scope.preserveAttributes(button, ['hidden', 'aria-pressed', 'data-pt', 'data-en']);
+  const text = button.textContent;
+  scope.onCleanup(() => { button.textContent = text; });
+}
 const m = {rx:-.3,ry:0,vx:0,vy:0,dragging:false,hover:false,focused:false,moved:0,last:null,start:null,pointer:null};
+scope.onCleanup(() => {
+  if (m.pointer !== null && stage.hasPointerCapture(m.pointer)) stage.releasePointerCapture(m.pointer);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
 let listMode = false, paused = false, visible = false, frame = 0, lastTime = 0;
 widget.classList.add('is-enhanced');
 toggle.hidden = false;
@@ -125,21 +144,21 @@ function label(button,pt,en){
   button.dataset.pt=pt;button.dataset.en=en;
   button.textContent=document.documentElement.lang==='en'?en:pt;
 }
-toggle.addEventListener('click',()=>{
+scope.listen(toggle, 'click',()=>{
   listMode=!listMode;widget.classList.toggle('is-list',listMode);
   toggle.setAttribute('aria-pressed',String(listMode));
   label(toggle,listMode?'Ver globo':'Ver lista',listMode?'Show globe':'Show list');
   pause.hidden=listMode;sync();
 });
-pause.addEventListener('click',()=>{
+scope.listen(pause, 'click',()=>{
   paused=!paused;m.vx=m.vy=0;pause.setAttribute('aria-pressed',String(paused));
   label(pause,paused?'Retomar rotação':'Pausar rotação',paused?'Resume rotation':'Pause rotation');sync();
 });
-stage.addEventListener('pointerdown',e=>{
+scope.listen(stage, 'pointerdown',e=>{
   if(listMode||!e.isPrimary||e.button!==0)return;
   m.dragging=true;m.pointer=e.pointerId;m.start=m.last={x:e.clientX,y:e.clientY};m.moved=0;m.vx=m.vy=0;
 });
-stage.addEventListener('pointermove',e=>{
+scope.listen(stage, 'pointermove',e=>{
   if(!m.dragging||e.pointerId!==m.pointer||listMode)return;
   const distance=Math.hypot(e.clientX-m.start.x,e.clientY-m.start.y);
   if(e.pointerType==='touch'&&distance>DRAG_THRESHOLD&&Math.abs(e.clientY-m.start.y)>Math.abs(e.clientX-m.start.x)*1.2){m.dragging=false;return;}
@@ -157,21 +176,23 @@ function release(e){
   m.dragging=false;
   if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);
 }
-stage.addEventListener('pointerup',release);
-stage.addEventListener('pointercancel',release);
-stage.addEventListener('lostpointercapture',()=>{m.dragging=false;});
-stage.addEventListener('pointerenter',()=>{m.hover=true;});
-stage.addEventListener('pointerleave',()=>{m.hover=false;if(!stage.hasPointerCapture(m.pointer??-1))m.dragging=false;});
-stage.addEventListener('click',e=>{if(!listMode&&m.moved>DRAG_THRESHOLD&&e.detail!==0){e.preventDefault();e.stopPropagation();}m.moved=0;},true);
-stage.addEventListener('dragstart',e=>e.preventDefault());
-stage.addEventListener('focusin',()=>{m.focused=true;sync();});
-stage.addEventListener('focusout',()=>{queueMicrotask(()=>{m.focused=stage.contains(document.activeElement);sync();});});
-new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(stage);
-new ResizeObserver(sync).observe(stage);
-reduced.addEventListener('change',()=>{m.vx=m.vy=0;sync();});
-document.addEventListener('visibilitychange',sync);
-window.addEventListener('pagehide',()=>{cancelAnimationFrame(frame);frame=0;});
-window.addEventListener('pageshow',sync);
+scope.listen(stage, 'pointerup',release);
+scope.listen(stage, 'pointercancel',release);
+scope.listen(stage, 'lostpointercapture',()=>{m.dragging=false;});
+scope.listen(stage, 'pointerenter',()=>{m.hover=true;});
+scope.listen(stage, 'pointerleave',()=>{m.hover=false;if(!stage.hasPointerCapture(m.pointer??-1))m.dragging=false;});
+scope.listen(stage, 'click',e=>{if(!listMode&&m.moved>DRAG_THRESHOLD&&e.detail!==0){e.preventDefault();e.stopPropagation();}m.moved=0;},true);
+scope.listen(stage, 'dragstart',e=>e.preventDefault());
+scope.listen(stage, 'focusin',()=>{m.focused=true;sync();});
+scope.listen(stage, 'focusout',()=>{queueMicrotask(()=>{m.focused=stage.contains(document.activeElement);sync();});});
+scope.observer(IntersectionObserver, ([entry])=>{visible=entry.isIntersecting;sync();}).observe(stage);
+scope.observer(ResizeObserver, sync).observe(stage);
+scope.listen(reduced, 'change',()=>{m.vx=m.vy=0;sync();});
+scope.listen(document, 'visibilitychange',sync);
+scope.listen(window, 'pagehide',()=>{cancelAnimationFrame(frame);frame=0;});
+scope.listen(window, 'pageshow',sync);
 sync();
 
-})();
+
+return scope.dispose;
+}

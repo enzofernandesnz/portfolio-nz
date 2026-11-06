@@ -39,7 +39,6 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 - Conteúdo em português e inglês; preferência de idioma persistida no navegador.
 - Grade animada de contribuições do README do perfil do GitHub, com calendário estático quando o movimento reduzido está ativo ou a imagem está indisponível.
 - Projetos em cartões na horizontal, com o Estagi.ON fixado primeiro e os demais em ordem decrescente de criação dos repositórios.
-- Filtros por Front-end, Full stack e Java.
 - Capturas dos projetos e ilustrações conceituais identificadas, com ampliação em janela acessível.
 - Histórico profissional e formação acadêmica.
 - Links de e-mail, WhatsApp, LinkedIn e GitHub.
@@ -50,11 +49,11 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 
 | Camada | Tecnologia | Uso |
 |---|---|---|
-| Front-end | HTML5 | Conteúdo e estrutura semântica |
+| Front-end | React 19 e JSX | Componentes, estado e estrutura semântica |
 | Estilos | CSS3, Grid e Flexbox | Layout, identidade visual e responsividade |
-| Interatividade | JavaScript ES moderno | Idiomas, projetos, timeline, menu e modal |
+| Interatividade | React Hooks e JavaScript | Idiomas, carrosséis, modais, GitHub, formulário e efeitos com ciclo de vida |
 | Back-end de contato | FormSubmit, serviço externo | Recebimento do POST, captcha e entrega por e-mail |
-| Servidor de desenvolvimento | Node.js 20+ | Servir a pasta `dist` localmente |
+| Desenvolvimento e build | Node.js 22.12+ e Vite 8 | Servidor local e geração da pasta `dist` |
 | Efeito visual | SplashCursor / React Bits, adaptado para JavaScript nativo | Simulação de fluido em WebGL; código incluído localmente, sem dependências npm |
 | APIs nativas | LocalStorage, IntersectionObserver, Dialog, Constraint Validation | Preferências, navegação, modal e validação |
 | Protótipos | Figma | Wireframes de média fidelidade, editáveis |
@@ -68,8 +67,8 @@ O nome curto escolhido é **nz**. O visual combina fundo verde escuro, tipografi
 
 ```text
 Visitante
-  ├── Hospedagem estática → index.html + style.css + app.js + assets
-  │                         ├── renderização dos projetos e filtros
+  ├── Hospedagem estática → build Vite + React + CSS e assets
+  │                         ├── componentes de projetos, certificados e GitHub
   │                         ├── idioma PT/EN e preferência local
   │                         └── navegação e janelas de detalhes
   └── Formulário POST → FormSubmit → caixa de e-mail de Enzo
@@ -79,17 +78,17 @@ Os commits mostrados na faixa são atualizados pelo GitHub Actions a cada 15 min
 
 ### Fumaça interativa (SplashCursor)
 
-O efeito parte do [exemplo ReactBits do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits), com o componente SplashCursor de David Haz / React Bits adaptado ao JavaScript nativo do portfólio. O motor de fluido utiliza WebGL; não foi necessário migrar o site para React.
+O efeito parte do [exemplo ReactBits do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/ReactBits), com o componente SplashCursor de David Haz / React Bits adaptado ao JavaScript nativo do portfólio. O motor de fluido utiliza WebGL e é montado e liberado pelo ciclo de vida do componente React `Effects`.
 
 Um único canvas fixo cobre a largura da janela, com `pointer-events: none`, mas é recortado verticalmente aos limites de Início e Sobre mim. Não aparece em Projetos, Experiências ou Contato, mesmo quando essas seções dividem a tela com Sobre mim. Movimentos fora da área permitida não geram fumaça; a simulação pausa quando ambas as seções saem da tela. As coordenadas do mouse e do toque são relativas à janela, independentemente da largura dos blocos de conteúdo. A cor verde-lima acompanha a identidade visual. A resolução da simulação e a taxa de atualização são limitadas. O WebGL só é iniciado após interação com o mouse ou toque; a renderização pausa durante a rolagem, após 1,4 segundo sem interação, quando a aba fica oculta ou quando `prefers-reduced-motion` está ativo. Depois de rolar, um novo movimento do ponteiro retoma o efeito nas áreas permitidas. Os eventos da rodinha são passivos: a distância e a velocidade de rolagem permanecem controladas pelo navegador. Sem suporte WebGL, ou após perda do contexto gráfico, o conteúdo permanece disponível sem animação.
 
-O código e os créditos estão em `dist/splash-cursor.js`, e a licença MIT + Commons Clause acompanha a distribuição em `dist/licenses/LICENSE-react-bits.md`. A adaptação acrescenta recorte por seção com largura total, controle de visibilidade, acessibilidade e liberação de recursos gráficos.
+O código e os créditos estão em `src/effects/splash-cursor.js`, e a licença MIT + Commons Clause acompanha a distribuição em `public/licenses/LICENSE-react-bits.md`. A adaptação acrescenta recorte por seção com largura total, controle de visibilidade, acessibilidade e liberação de recursos gráficos.
 
 Capturas da primeira versão do efeito (anterior à expansão para toda a tela): [Início](docs/splash-inicio.webp) · [Sobre Mim](docs/splash-sobre.webp).
 
 ### Formulário e privacidade
 
-O destinatário está configurado no atributo `action` do formulário em `dist/index.html`. Não há senha nem chave secreta no código. O formulário utiliza captcha do serviço e um campo honeypot. A página informa que nome, e-mail e mensagem são processados pelo FormSubmit.
+O destinatário está configurado no formulário em `src/content.jsx` e no envio em `src/Contact.jsx`. Não há senha nem chave secreta no código. O formulário utiliza captcha do serviço e um campo honeypot. A página informa que nome, e-mail e mensagem são processados pelo FormSubmit.
 
 **Ativação:** abrir o site hospedado, preencher o formulário e enviar uma mensagem de teste; em seguida, confirmar a ativação recebida em `enzofalcantara@gmail.com`. Verificar também a pasta de spam. Depois da confirmação, realizar um segundo envio e conferir o recebimento. A tela não apresenta sucesso simulado: a confirmação é responsabilidade da resposta do serviço.
 
@@ -97,7 +96,7 @@ O destinatário está configurado no atributo `action` do formulário em `dist/i
 
 ### Pré-requisitos
 
-- Node.js 20 ou superior.
+- Node.js 22.12 ou superior. A publicação usa Node.js 24.
 - Navegador atualizado.
 - Internet para abrir links externos e enviar o formulário.
 
@@ -108,14 +107,15 @@ O destinatário está configurado no atributo `action` do formulário em `dist/i
 3. Execute:
 
 ```sh
+npm ci
 npm start
 ```
 
 4. Acesse `http://localhost:4173`.
 
-Não é necessário executar `npm install`: o servidor utiliza apenas módulos nativos do Node.js. Também é possível abrir `dist/index.html` para inspecionar o layout; para testar o formulário, utilize o site servido por HTTP ou HTTPS.
+O Vite serve o código React com recarregamento automático. Para gerar e visualizar a versão publicada, execute `npm run build` e `npm run preview`. A pasta `dist` é gerada e servida por HTTP ou HTTPS.
 
-### Verificação de sintaxe
+### Compilação
 
 ```sh
 npm run check
@@ -123,11 +123,11 @@ npm run check
 
 ### Personalização
 
-- **Textos e experiência:** `dist/index.html`.
-- **Projetos, datas e tecnologias:** lista `projects` no início de `dist/app.js`.
-- **Identidade visual:** variáveis de cor e regras em `dist/style.css`.
-- **Imagens:** `dist/assets`.
-- **Novo idioma:** atributos `data-pt`/`data-en` no HTML e textos dos projetos.
+- **Textos e experiência:** `src/content.jsx`.
+- **Projetos, datas e tecnologias:** `src/data/projects.js`; interface em `src/Projects.jsx`.
+- **Identidade visual:** arquivos CSS originais em `public/`.
+- **Imagens:** `public/assets`.
+- **Idioma:** contexto `src/language.jsx` e componentes `Text`.
 
 Ao incluir um projeto, preencha nome, data de referência, categoria, tecnologias, descrições nos dois idiomas, link do repositório e imagem real. As datas atuais representam criação dos repositórios; não são datas declaradas de conclusão dos trabalhos.
 
@@ -135,12 +135,12 @@ Ao incluir um projeto, preencha nome, data de referência, categoria, tecnologia
 
 ### Hospedagem desta entrega
 
-A publicação usa a pasta `dist` e o workflow `.github/workflows/pages.yml`. O endereço publicado é https://enzofernandesnz.github.io/portfolio-nz/. Publicação concluída com sucesso em 12/10/2026. Consulte [ENTREGA.md](ENTREGA.md).
+A publicação executa `npm ci` e `npm run build`, atualiza os dados públicos do GitHub e envia a pasta gerada `dist` pelo workflow `.github/workflows/pages.yml`. O endereço publicado é https://enzofernandesnz.github.io/portfolio-nz/. Publicação concluída com sucesso em 12/10/2026. Consulte [ENTREGA.md](ENTREGA.md).
 
 ### GitHub Pages
 
 1. Acesse o repositório `enzofernandesnz/portfolio-nz`.
-2. O código, o README, `docs`, `dist` e `.github` já estão na branch `main`.
+2. O código React em `src`, os arquivos estáticos em `public`, o lockfile e `.github` ficam na branch `main`.
 3. Em **Settings → Pages → Build and deployment**, selecione **GitHub Actions**.
 4. Execute o workflow `Publicar portfolio no GitHub Pages`, ou faça um envio para a branch `main`.
 5. Copie o endereço fornecido pelo deploy para a seção de links úteis deste README.
@@ -151,7 +151,7 @@ O workflow já está em `.github/workflows/pages.yml`. Os caminhos dos recursos 
 
 1. Importe o repositório do portfólio na sua conta Vercel.
 2. Selecione o preset **Other** e o diretório de saída `dist`.
-3. Deixe os comandos de instalação e build vazios.
+3. Use `npm ci` para instalar e `npm run build` para compilar.
 4. Publique e atualize o link deste README com o endereço fornecido.
 
 A configuração está em `vercel.json`. Nenhuma variável de ambiente é necessária para esta versão.
@@ -160,28 +160,22 @@ A configuração está em `vercel.json`. Nenhuma variável de ambiente é necess
 
 ```text
 portfolio-enzo/
-├── .github/workflows/pages.yml   # Publicação no GitHub Pages
-├── scripts/
-│   └── github-data.mjs           # Atualiza o snapshot de atividade pública
-├── dist/
-│   ├── data/github.json          # Últimos commits e dados públicos em cache
-│   ├── index.html                # Página com as quatro seções
-│   ├── style.css                 # Estilos e regras responsivas
-│   ├── app.js                    # Conteúdo dinâmico e interações
-│   ├── splash-cursor.js          # Fumaça no início e em Sobre mim
-│   ├── licenses/                # Licença do componente React Bits
-│   └── assets/                   # Imagens e ilustrações identificadas, ícone nz
+├── src/
+│   ├── main.jsx, App.jsx          # Entrada React e composição da página
+│   ├── content.jsx, language.jsx  # Conteúdo e idioma
+│   ├── Projects.jsx, Certificates.jsx
+│   ├── GitHub.jsx, ContributorStats.jsx, github-data.js
+│   ├── Contact.jsx, Effects.jsx, page-effects.js
+│   ├── data/projects.js
+│   └── effects/                   # Canvas e WebGL com montagem e limpeza
+├── public/                        # CSS, imagens, licenças e snapshot local
+├── dist/                          # Build gerado para publicação
+├── .github/workflows/pages.yml
+├── scripts/github-data.mjs
 ├── docs/
-│   ├── wireframes.webp            # Visão geral exportada do Figma
-│   ├── inicio.webp                # Captura do site
-│   ├── desktop.webp               # Página completa em desktop
-│   ├── mobile.webp                # Página completa em celular
-│   ├── PLANEJAMENTO.md           # Requisitos, sprints e decisões
-│   └── APRESENTACAO.md            # Roteiro de demonstração
-├── ENTREGA.md                    # Situação e ações finais
-├── README.md
-├── package.json
-├── server.mjs                    # Servidor local sem dependências
+├── index.html, vite.config.js
+├── package.json, package-lock.json
+├── README.md, ENTREGA.md
 └── vercel.json
 ```
 
@@ -227,7 +221,7 @@ Verificações realizadas durante o desenvolvimento:
 
 - Navegação entre as quatro seções e menu móvel.
 - Alternância PT/EN e persistência da preferência.
-- Filtros e ordem cronológica dos projetos.
+- Ordem e navegação horizontal dos projetos.
 - Abertura e fechamento do modal de imagens/detalhes.
 - Campos obrigatórios, endereço de e-mail inválido e comprimentos mínimos.
 - Layout em larguras de 320, 390, 768 e 1440 pixels.
@@ -245,7 +239,7 @@ E-mail: enzofalcantara@gmail.com
 ## Referências e agradecimentos
 
 - Estrutura deste README adaptada ao [template do professor João Paulo Aramuni](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/TEMPLATES/template_README.md).
-- [React Bits — SplashCursor](https://reactbits.dev/animations/splash-cursor), de David Haz. Licença incluída em `dist/licenses/LICENSE-react-bits.md`.
+- [React Bits — SplashCursor](https://reactbits.dev/animations/splash-cursor), de David Haz. Licença incluída em `public/licenses/LICENSE-react-bits.md`.
 - [Documentação do FormSubmit](https://formsubmit.co/documentation).
 - [Documentação do GitHub Pages](https://docs.github.com/en/pages).
 - [Documentação da Vercel](https://vercel.com/docs).
@@ -257,11 +251,11 @@ Na seção Sobre mim, abaixo do título, o SkillsGlobe apresenta 14 tecnologias 
 
 Permite arrastar com mouse ou toque, abrir a documentação das tecnologias, pausar a rotação e alternar para uma lista. Respeita a preferência de movimento reduzido, pausa fora da tela e durante a navegação por teclado. Sem JavaScript, mantém uma lista de links acessível. Controles disponíveis em português e inglês.
 
-Arquivos: `dist/skills-globe.js`, `dist/skills-globe.css` e `dist/assets/skills/`. Ícones locais do [Devicon](https://github.com/devicons/devicon), com as respectivas marcas preservadas. Licenças MIT incluídas em `dist/licenses/LICENSE-skills-globe.txt` e `dist/licenses/LICENSE-devicon.txt`.
+Arquivos: `src/effects/skills-globe.js`, `public/skills-globe.css` e `public/assets/skills/`. Ícones locais do [Devicon](https://github.com/devicons/devicon), com as respectivas marcas preservadas. Licenças MIT incluídas em `public/licenses/LICENSE-skills-globe.txt` e `public/licenses/LICENSE-devicon.txt`.
 
 ### Entrada dos elementos durante a rolagem
 
-Títulos, textos, projetos, experiências e contatos aparecem com opacidade gradual e subida de 28 pixels ao entrar na tela. O efeito dura 650 ms, com pequenos intervalos entre itens, e acontece uma única vez por elemento. Usa IntersectionObserver, sem bibliotecas adicionais. Os cartões gerados pelos filtros também recebem o efeito. Conteúdo já visível e elementos acessados pelo teclado aparecem imediatamente; movimento reduzido, impressão e ausência de JavaScript mantêm o conteúdo visível.
+Títulos, textos, projetos, experiências e contatos aparecem com opacidade gradual e subida de 28 pixels ao entrar na tela. O efeito dura 650 ms, com pequenos intervalos entre itens, e acontece uma única vez por elemento. Usa IntersectionObserver, sem bibliotecas adicionais. Os cartões React também recebem o efeito. Conteúdo já visível e elementos acessados pelo teclado aparecem imediatamente; movimento reduzido, impressão e ausência de JavaScript mantêm o conteúdo visível.
 
 ### Indicador de progresso de rolagem
 
@@ -275,7 +269,7 @@ A seção de projetos usa fundo claro pontilhado em CSS, cartões brancos com bo
 
 ### Atividade no GitHub
 
-A faixa de atividade e o painel GitHub mostram dados públicos de `enzofernandesnz`: perfil e repositórios pela API REST do GitHub, eventos públicos recentes (limitados pelo histórico da API) e calendário do último ano pelo serviço comunitário github-contributions-api, como na alternativa sem token do [exemplo GitHubAPI do professor](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/GitHubAPI). O calendário e as sequências refletem os dados públicos retornados pelo serviço; solicitações podem falhar ou atingir limites. Não há token no navegador. A interface apresenta mensagens quando os dados não estão disponíveis.
+A faixa de atividade e o painel GitHub mostram dados públicos de `enzofernandesnz`: perfil e repositórios pela API REST do GitHub, últimos commits dos repositórios públicos e calendário do último ano pelo serviço comunitário github-contributions-api, como na alternativa sem token do [exemplo GitHubAPI do professor](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/tree/main/PROJETOS/React/GitHubAPI). O calendário e as sequências refletem os dados públicos retornados pelo serviço; solicitações podem falhar ou atingir limites. Não há token no navegador. A interface apresenta mensagens quando os dados não estão disponíveis.
 
 ### Análise de colaboradores
 
